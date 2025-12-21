@@ -1,0 +1,67 @@
+{
+  "categories": [
+    {
+      "id": "jackets",
+      "name": "КУРТКИ",
+      "slug": "jackets",
+      "description": "Мужские куртки",
+      "isDefault": true
+    },
+    {
+      "id": "shoes",
+      "name": "ОБУВЬ",
+      "slug": "shoes",
+      "description": "Мужская обувь",
+      "isDefault": true
+    },
+    {
+      "id": "coats",
+      "name": "ПАЛЬТО",
+      "slug": "coats",
+      "description": "Мужские пальто",
+      "isDefault": true
+    },
+    {
+      "id": "sweaters",
+      "name": "КОФТЫ",
+      "slug": "sweaters",
+      "description": "Мужские кофты и свитера",
+      "isDefault": true
+    },
+    {
+      "id": "glasses",
+      "name": "ОЧКИ",
+      "slug": "glasses",
+      "description": "Солнцезащитные очки",
+      "isDefault": true
+    },
+    {
+      "id": "pants",
+      "name": "ШТАНЫ",
+      "slug": "pants",
+      "description": "Мужские брюки и джинсы",
+      "isDefault": true
+    },
+    {
+      "id": "hats",
+      "name": "ГОЛОВНОЙ УБОР",
+      "slug": "hats",
+      "description": "Шапки и кепки",
+      "isDefault": true
+    },
+    {
+      "id": "jamess",
+      "name": "jammeeSS$",
+      "slug": "jamess",
+      "description": "kdakalalaaaakweeeee",
+      "isDefault": false
+    },
+    {
+      "id": "sweetshots",
+      "name": "SWEETSHOTS",
+      "slug": "sweetshots",
+      "description": "SWEETSHOTSSWEETSHOTSSWEETSHOTS",
+      "isDefault": false
+    }
+  ]
+}

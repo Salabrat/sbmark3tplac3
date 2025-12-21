@@ -1,0 +1,30 @@
+{
+  "brands": [
+    {
+      "id": 3,
+      "name": "C.P. Company",
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "name": "Stone Island",
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "name": "Barberry",
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "name": "Dior",
+      "isActive": true
+    },
+    {
+      "id": 7,
+      "name": "Calvin Klein",
+      "isActive": true
+    }
+  ],
+  "lastId": 7
+}

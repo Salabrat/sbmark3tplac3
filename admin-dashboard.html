@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - C.P. Company</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin-body">
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-logo">
+                <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
+                    <text x="0" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="currentColor">C.P.</text>
+                    <text x="0" y="32" font-family="Arial, sans-serif" font-size="8" font-weight="normal" fill="currentColor">COMPANY</text>
+                </svg>
+                <span class="admin-title">Админ-панель</span>
+            </div>
+            <div class="admin-actions">
+                <a href="index.html" class="admin-btn admin-btn-secondary" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15,3 21,3 21,9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    Посмотреть сайт
+                </a>
+                <button class="admin-btn admin-btn-danger" onclick="logout()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16,17 21,12 16,7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Выйти
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <nav class="admin-nav">
+                <a href="#dashboard" class="admin-nav-item active" data-section="dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="9"></rect>
+                        <rect x="14" y="3" width="7" height="5"></rect>
+                        <rect x="14" y="12" width="7" height="9"></rect>
+                        <rect x="3" y="16" width="7" height="5"></rect>
+                    </svg>
+                    Главная
+                </a>
+                <a href="#brands" class="admin-nav-item" data-section="brands">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 17H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-1"></path>
+                        <polygon points="12 15 17 21 7 21 12 15"></polygon>
+                    </svg>
+                    Бренды
+                </a>
+                <a href="#categories" class="admin-nav-item" data-section="categories">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    Категории
+                </a>
+                <a href="#products" class="admin-nav-item" data-section="products">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    Товары
+                </a>
+                <a href="#settings" class="admin-nav-item" data-section="settings">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Настройки
+                </a>
+                <a href="#images" class="admin-nav-item" data-section="images">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    Изображения
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="admin-section active">
+                <div class="admin-section-header">
+                    <h1>Главная панель</h1>
+                    <p>Обзор статистики и быстрые действия</p>
+                </div>
+                
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalProducts">0</h3>
+                            <p>Всего товаров</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalCategories">7</h3>
+                            <p>Категорий</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="m1 1 4 4 2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <h3>0</h3>
+                            <p>Заказов</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <h2>Быстрые действия</h2>
+                    <div class="action-cards">
+                        <button class="action-card" onclick="switchSection('products')">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            <h3>Добавить товар</h3>
+                            <p>Создать новый товар в каталоге</p>
+                        </button>
+                        
+                        <button class="action-card" onclick="switchSection('categories')">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                            </svg>
+                            <h3>Управление категориями</h3>
+                            <p>Настроить категории товаров</p>
+                        </button>
+                        
+                        <button class="action-card" onclick="switchSection('images')">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                            <h3>Управление изображениями</h3>
+                            <p>Изменить изображения сайта</p>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Brands Section -->
+            <section id="brands-section" class="admin-section">
+                <div class="admin-section-header">
+                    <h1>Управление брендами</h1>
+                    <p>Добавление и редактирование брендов</p>
+                </div>
+                
+                <div class="admin-form-card">
+                    <h2>Добавить новый бренд</h2>
+                    <form id="add-brand-form" class="admin-form">
+                        <div class="form-group">
+                            <label for="brand-name-input">Название бренда</label>
+                            <input 
+                                type="text" 
+                                id="brand-name-input" 
+                                class="form-control" 
+                                placeholder="Введите название бренда" 
+                                required
+                            >
+                        </div>
+                        <button type="submit" class="admin-btn admin-btn-primary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            Добавить бренд
+                        </button>
+                    </form>
+                </div>
+
+                <div class="admin-card">
+                    <h2>Список брендов</h2>
+                    <div id="brands-list" class="brands-list">
+                        <!-- Brands will be loaded here -->
+                    </div>
+                </div>
+
+                <style>
+                    .admin-form-card {
+                        background: white;
+                        border-radius: 8px;
+                        padding: 24px;
+                        margin-bottom: 24px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    }
+                    
+                    .admin-form-card h2 {
+                        margin-top: 0;
+                        margin-bottom: 20px;
+                        font-size: 18px;
+                    }
+                    
+                    .admin-form {
+                        display: flex;
+                        gap: 12px;
+                        align-items: flex-end;
+                    }
+                    
+                    .admin-form .form-group {
+                        flex: 1;
+                    }
+                    
+                    .admin-form label {
+                        display: block;
+                        margin-bottom: 8px;
+                        font-weight: 500;
+                        color: #333;
+                    }
+                    
+                    .admin-form .form-control {
+                        width: 100%;
+                        padding: 10px 12px;
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        font-size: 14px;
+                    }
+                    
+                    .admin-card {
+                        background: white;
+                        border-radius: 8px;
+                        padding: 24px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    }
+                    
+                    .admin-card h2 {
+                        margin-top: 0;
+                        margin-bottom: 20px;
+                        font-size: 18px;
+                    }
+                    
+                    .brands-list {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 12px;
+                    }
+                    
+                    .brand-item {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 16px;
+                        border: 1px solid #e0e0e0;
+                        border-radius: 6px;
+                        background: #fff;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .brand-item:hover {
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    }
+                    
+                    .brand-item.inactive {
+                        opacity: 0.6;
+                        background: #f5f5f5;
+                    }
+                    
+                    .brand-info {
+                        display: flex;
+                        align-items: center;
+                        gap: 16px;
+                    }
+                    
+                    .brand-name {
+                        margin: 0;
+                        font-size: 16px;
+                        font-weight: 500;
+                    }
+                    
+                    .brand-status {
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        font-size: 12px;
+                        background: #e8f5e9;
+                        color: #2e7d32;
+                    }
+                    
+                    .brand-item.inactive .brand-status {
+                        background: #ffebee;
+                        color: #c62828;
+                    }
+                    
+                    .brand-actions {
+                        display: flex;
+                        gap: 8px;
+                    }
+                    
+                    .brand-actions button {
+                        padding: 8px;
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        background: white;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                    }
+                    
+                    .brand-actions button:hover {
+                        background: #f5f5f5;
+                    }
+                    
+                    .btn-edit {
+                        color: #1976d2;
+                    }
+                    
+                    .btn-toggle {
+                        color: #fb8c00;
+                    }
+                    
+                    .btn-delete {
+                        color: #d32f2f;
+                    }
+                    
+                    .empty-message {
+                        text-align: center;
+                        padding: 40px;
+                        color: #999;
+                        font-size: 14px;
+                    }
+                </style>
+            </section>
+
+            <!-- Categories Section -->
+            <section id="categories-section" class="admin-section">
+                <div class="admin-section-header">
+                    <h1>Управление категориями</h1>
+                    <p>Настройка категорий товаров</p>
+                    <div class="section-actions">
+                        <button class="admin-btn admin-btn-primary" onclick="showAddCategoryModal()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            Добавить категорию
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="categories-grid" id="categoriesGrid">
+                    <!-- Categories will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products-section" class="admin-section">
+                <div class="admin-section-header">
+                    <h1>Управление товарами</h1>
+                    <div class="section-actions">
+                        <button class="admin-btn admin-btn-primary" onclick="showAddProductModal()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            Добавить товар
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="products-table-container">
+                    <table class="admin-table" id="productsTable">
+                        <thead>
+                            <tr>
+                                <th>Изображение</th>
+                                <th>Название</th>
+                                <th>Бренд</th>
+                                <th>Категория</th>
+                                <th>Размеры</th>
+                                <th>Цвета</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <tr class="empty-row">
+                                <td colspan="7">
+                                    <div class="empty-state">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                        </svg>
+                                        <p>Товары не найдены</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="admin-section">
+                <div class="admin-section-header">
+                    <h1>Настройки сайта</h1>
+                    <p>Общие настройки и конфигурация</p>
+                </div>
+                
+                <div class="settings-form">
+                    <div class="form-group">
+                        <label>Название сайта</label>
+                        <input type="text" value="C.P. Company" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Описание</label>
+                        <textarea class="form-control" rows="3">В 1971 году Массимо Ости — дизайнер и революционер, всемирно признанный отец спортивной одежды, — основал бренд Chester Perry, переименованный в 1978 году в C.P. Company.</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Telegram продавца</label>
+                        <input type="text" id="telegramUsername" class="form-control" placeholder="username без @">
+                        <small class="form-hint">Введите username Telegram без символа @</small>
+                    </div>
+                    
+                    <button class="admin-btn admin-btn-primary" onclick="saveSettings()">Сохранить настройки</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal" id="addProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Добавить товар</h2>
+                <button class="modal-close" onclick="closeAddProductModal()">&times;</button>
+            </div>
+            <form class="modal-body" id="addProductForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productName">Название товара *</label>
+                        <input type="text" id="productName" name="productName" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="productBrand">Бренд *</label>
+                        <select id="productBrand" name="productBrand" required class="form-control">
+                            <option value="">Выберите бренд</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productCategory">Категория *</label>
+                        <select id="productCategory" name="productCategory" required class="form-control">
+                            <option value="">Выберите категорию</option>
+                            <option value="КУРТКИ">КУРТКИ</option>
+                            <option value="ОБУВЬ">ОБУВЬ</option>
+                            <option value="ПАЛЬТО">ПАЛЬТО</option>
+                            <option value="КОФТЫ">КОФТЫ</option>
+                            <option value="ОЧКИ">ОЧКИ</option>
+                            <option value="ШТАНЫ">ШТАНЫ</option>
+                            <option value="ГОЛОВНОЙ УБОР">ГОЛОВНОЙ УБОР</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Описание</label>
+                        <textarea id="productDescription" name="productDescription" rows="3" class="form-control"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="productImage">Изображение товара</label>
+                    <input type="file" id="productImage" name="productImage" accept="image/*" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>Размеры</label>
+                    <div class="checkbox-group" id="sizesGroup">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="sizes" value="XS"> XS
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="sizes" value="S"> S
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="sizes" value="M"> M
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="sizes" value="L"> L
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="sizes" value="XL"> XL
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="sizes" value="XXL"> XXL
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Цвета</label>
+                    <div class="colors-input">
+                        <div class="color-inputs" id="colorInputs">
+                            <div class="color-input-row">
+                                <input type="text" name="colors" placeholder="Название цвета" class="form-control">
+                                <input type="color" name="colorValues" value="#000000" class="color-picker">
+                                <button type="button" class="btn-remove-color" onclick="removeColorInput(this)">×</button>
+                            </div>
+                        </div>
+                        <button type="button" class="admin-btn admin-btn-secondary" onclick="addColorInput()">+ Добавить цвет</button>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="admin-btn admin-btn-secondary" onclick="closeAddProductModal()">Отмена</button>
+                    <button type="submit" class="admin-btn admin-btn-primary">Добавить товар</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+            <!-- Images Section -->
+            <section id="images-section" class="admin-section">
+                <div class="admin-section-header">
+                    <h1>Управление изображениями</h1>
+                    <p>Настройка изображений сайта</p>
+                </div>
+                
+                <div class="images-management">
+                    <h2>Изображения главной страницы</h2>
+                    <div id="homepageImagesGrid" class="homepage-images-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;"></div>
+                </div>
+
+                <div class="images-management">
+                    <h2>Изображение страницы входа/регистрации</h2>
+                    <div class="image-preview-container">
+                        <div class="current-image">
+                            <h3>Текущее изображение:</h3>
+                            <img id="loginImagePreview" src="" alt="Login Page Image" style="max-width: 400px; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+                        </div>
+                        <div class="image-actions">
+                            <button class="admin-btn admin-btn-primary" onclick="openLoginImageModal()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                                Изменить изображение
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Homepage Image Upload -->
+    <div id="homepageImageModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="homepageImageModalTitle">Изменить изображение</h2>
+                <button class="modal-close" onclick="closeHomepageImageModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="homepageImageUpload">Выберите новое изображение:</label>
+                    <input type="file" id="homepageImageUpload" accept="image/*" class="form-control">
+                    <p class="help-text" id="homepageImageRecommendedSize">Рекомендуемый размер: —</p>
+                </div>
+                <div class="form-group">
+                    <label for="homepageImageUrl">Или введите URL изображения:</label>
+                    <input type="text" id="homepageImageUrl" placeholder="https://example.com/image.jpg" class="form-control">
+                </div>
+                <div id="homepageImageUploadPreview" style="margin-top: 20px; display: none;">
+                    <h4>Предпросмотр:</h4>
+                    <img id="homepageImageUploadPreviewImg" src="" alt="Preview" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="admin-btn admin-btn-secondary" onclick="closeHomepageImageModal()">Отмена</button>
+                <button class="admin-btn admin-btn-primary" onclick="saveHomepageImage()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Login Image Upload -->
+    <div id="loginImageModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Изменить изображение страницы входа</h2>
+                <button class="modal-close" onclick="closeLoginImageModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="loginImageUpload">Выберите новое изображение:</label>
+                    <input type="file" id="loginImageUpload" accept="image/*" class="form-control">
+                    <p class="help-text">Рекомендуемый размер: 800x1200px</p>
+                </div>
+                <div class="form-group">
+                    <label for="loginImageUrl">Или введите URL изображения:</label>
+                    <input type="text" id="loginImageUrl" placeholder="https://example.com/image.jpg" class="form-control">
+                </div>
+                <div id="loginImageUploadPreview" style="margin-top: 20px; display: none;">
+                    <h4>Предпросмотр:</h4>
+                    <img id="loginImageUploadPreviewImg" src="" alt="Preview" style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="admin-btn admin-btn-secondary" onclick="closeLoginImageModal()">Отмена</button>
+                <button class="admin-btn admin-btn-primary" onclick="saveLoginImage()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div class="modal" id="addCategoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Добавить категорию</h2>
+                <button class="modal-close" onclick="closeAddCategoryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="categoryName">Название категории *</label>
+                    <input type="text" id="categoryName" name="categoryName" required class="form-control" placeholder="Например: КУРТКИ">
+                </div>
+                <div class="form-group">
+                    <label for="categorySlug">URL идентификатор *</label>
+                    <input type="text" id="categorySlug" name="categorySlug" required class="form-control" placeholder="Например: jackets">
+                    <small class="form-hint">Используйте только латинские буквы в нижнем регистре</small>
+                </div>
+                <div class="form-group">
+                    <label for="categoryDescription">Описание</label>
+                    <textarea id="categoryDescription" name="categoryDescription" class="form-control" rows="3" placeholder="Краткое описание категории"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="admin-btn admin-btn-secondary" onclick="closeAddCategoryModal()">Отмена</button>
+                <button class="admin-btn admin-btn-primary" onclick="saveCategory()">Добавить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+    <script src="admin-brands.js"></script>
+    <script src="product-manager.js"></script>
+    <script src="admin-categories.js"></script>
+    <script src="theme-toggle.js"></script>
+    <script src="admin-images.js"></script>
+    <script src="telegram-admin.js"></script>
+</body>
+</html>

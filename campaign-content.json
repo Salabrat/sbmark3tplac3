@@ -1,0 +1,23 @@
+{
+  "campaign1": {
+    "label": "Herbst Winter 025",
+    "title": "FW025 adv campaign",
+    "description": "Sportswear, Not for playing in",
+    "buttonText": "DISCOVER MADEE",
+    "buttonLink": "/category-jackets.html"
+  },
+  "campaign2": {
+    "label": "Herbst Winter 025",
+    "title": "Hochleistung$<br>JACKET$dam",
+    "description": "New Italian _____r icons with integrated lens protection\nModernste Technologien für alle Winterbedingungen\n",
+    "buttonText": "SNEACKERS",
+    "buttonLink": "/category-shoes.html"
+  },
+  "campaign3": {
+    "label": "Herbst Winter 044",
+    "title": "THE METROPOLI$<br>$ERIE$",
+    "description": "Топовые образы на нашем сайте",
+    "buttonText": "BUYBUYBUYBUY",
+    "buttonLink": "/shop-all.html"
+  }
+}

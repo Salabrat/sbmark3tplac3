@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Collection - C.P. Company</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="product-modal.css">
+    <link rel="stylesheet" href="brand-styles.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-wrapper">
+            <div class="top-bar-left">
+                <!-- Empty for now -->
+            </div>
+            <div class="top-bar-right">
+                <a href="login.html" class="top-bar-link">Login</a>
+                <a href="register.html" class="top-bar-link">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
+                    <text x="0" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="currentColor">C.P.</text>
+                    <text x="0" y="32" font-family="Arial, sans-serif" font-size="8" font-weight="normal" fill="currentColor">COMPANY</text>
+                </svg>
+            </a>
+
+            <!-- Navigation -->
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link">КАТЕГОРИИ</a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-content">
+                                <a href="category-jackets.html" class="dropdown-item">КУРТКИ</a>
+                                <a href="category-shoes.html" class="dropdown-item">ОБУВЬ</a>
+                                <a href="category-coats.html" class="dropdown-item">ПАЛЬТО</a>
+                                <a href="category-sweaters.html" class="dropdown-item">КОФТЫ</a>
+                                <a href="category-glasses.html" class="dropdown-item">ОЧКИ</a>
+                                <a href="category-pants.html" class="dropdown-item">ШТАНЫ</a>
+                                <a href="category-hats.html" class="dropdown-item">ГОЛОВНОЙ УБОР</a>
+                                <a href="shop-all.html" class="dropdown-item">ВСЕ ТОВАРЫ</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">NEW IN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">ICONS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-brand-menu="true">BRAND</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="#" class="action-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </a>
+                <a href="#" class="action-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                    </svg>
+                </a>
+                <a href="#" class="action-btn cart-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Page Header -->
+            <div class="shop-header">
+                <h1 class="shop-title brand-page-title" id="brandTitle">LOADING...</h1>
+                <p class="shop-description" id="brandDescription">Loading brand collection...</p>
+            </div>
+
+            <!-- Filters and Controls -->
+            <div class="shop-controls">
+                <div class="shop-info">
+                    <span class="product-count" id="productCount">0 изделий</span>
+                </div>
+                <div class="shop-actions">
+                    <div class="filter-dropdown">
+                        <button class="filters-btn" id="filterBtn">
+                            FILTERS
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="shop-grid" id="productsGrid">
+                <div class="loading" style="grid-column: 1/-1; text-align: center; padding: 60px;">
+                    Loading products...
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ABOUT</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Heritage</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>CUSTOMER SERVICE</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>FOLLOW US</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 C.P. Company. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Load brand products based on URL parameter
+        async function loadBrandPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const brandId = urlParams.get('id');
+            
+            if (!brandId) {
+                window.location.href = '/shop-all.html';
+                return;
+            }
+            
+            try {
+                // Load brands to get brand name
+                const brandsResponse = await fetch('/api/brands');
+                if (brandsResponse.ok) {
+                    const brands = await brandsResponse.json();
+                    const brand = brands.find(b => b.id == brandId);
+                    
+                    if (brand) {
+                        document.getElementById('brandTitle').textContent = brand.name.toUpperCase();
+                        document.getElementById('brandDescription').textContent = `Коллекция товаров бренда ${brand.name}`;
+                        document.title = `${brand.name} - C.P. Company`;
+                    }
+                }
+                
+                // Load products for this brand
+                const response = await fetch(`/api/products/brand/${brandId}`);
+                if (response.ok) {
+                    const products = await response.json();
+                    displayProducts(products);
+                    document.getElementById('productCount').textContent = `${products.length} изделий`;
+                }
+            } catch (error) {
+                console.error('Error loading brand page:', error);
+                document.getElementById('productsGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center;">Error loading products</div>';
+            }
+        }
+        
+        function displayProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            
+            if (products.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px;">Нет товаров для этого бренда</div>';
+                return;
+            }
+            
+            grid.innerHTML = products.map(product => {
+                const imageUrl = product.images && product.images.length > 0 
+                    ? (product.images[0].url || product.images[0].data || '/placeholder.jpg')
+                    : '/placeholder.jpg';
+                    
+                return `
+                    <div class="product-card">
+                        <a href="product.html?id=${product.id}" class="product-link">
+                            <div class="product-image">
+                                <img src="${imageUrl}" alt="${product.name}">
+                                ${product.isTrending ? '<span class="trending-badge">TRENDING</span>' : ''}
+                            </div>
+                            <div class="product-info">
+                                <span class="product-brand">${product.brandName || 'C.P. Company'}</span>
+                                <h3 class="product-name">${product.name}</h3>
+                                <p class="product-price">${product.price ? `€${product.price}` : 'Цена по запросу'}</p>
+                            </div>
+                        </a>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Load page on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadBrandPage);
+        } else {
+            loadBrandPage();
+        }
+    </script>
+    
+    <script src="theme-toggle.js"></script>
+    <script src="brand-navigation.js"></script>
+    <script src="dynamic-categories-menu.js"></script>
+</body>
+</html>
