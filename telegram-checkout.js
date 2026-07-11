@@ -41,16 +41,10 @@ class TelegramCheckout {
                         </button>
                         
                         <button class="tg-checkout-contact-btn tg-contact-max" id="tgCheckoutMaxBtn" style="display: none;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                            </svg>
                             Связаться в MAX
                         </button>
                         
                         <button class="tg-checkout-contact-btn tg-contact-vk" id="tgCheckoutVkBtn" style="display: none;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12.785 16.371c.742.722 1.533 1.406 2.198 2.22.295.358.58.724.795 1.14.26.508.093 1.074-.336 1.384-1.321.963-1.321.963-1.321.963-.426.286-.926.453-1.432.478-.933.048-1.766-.246-2.523-.768-.821-.564-1.549-1.252-2.299-1.915-.314-.278-.646-.537-1.035-.711-.375-.168-.711-.072-.939.267-.236.351-.288.76-.298 1.176-.016.636-.048.636-.686.636-1.078 0-2.156-.012-3.234-.012-.734 0-1.426-.228-2.058-.645-1.133-.75-2.029-1.734-2.819-2.819-1.518-2.058-2.674-4.312-3.719-6.633-.375-.846-.695-1.717-.953-2.607-.096-.322-.032-.5.336-.5.945-.012 1.89-.012 2.835-.012.398 0 .672.168.834.534.546 1.284 1.21 2.494 2.021 3.617.222.311.445.621.768.846.354.247.621.165.787-.234.108-.264.15-.558.168-.846.048-.798.048-1.596.024-2.394-.024-.534-.275-.879-.807-.98-.263-.048-.223-.144-.096-.323.18-.258.438-.421.822-.421 1.321.012 2.643.012 3.964.012.275 0 .55.06.807.18.414.192.546.522.582.945.048.534.048 1.068.024 1.602-.012.322-.024.644.012.966.06.522.322.685.834.383.644-.371 1.092-.933 1.525-1.495.621-.809 1.152-1.682 1.647-2.579.18-.322.438-.475.807-.475 1.165.012 2.33.012 3.495.012.144 0 .288.012.432.036.621.108.792.383.633.98-.252.921-.879 1.647-1.525 2.361-.645.714-1.332 1.386-2.074 2.007z"/>
-                            </svg>
                             Связаться в ВК
                         </button>
                     </div>
@@ -87,13 +81,6 @@ class TelegramCheckout {
             const settings = await response.json();
             console.log('✅ Loaded checkout settings:', settings);
             
-            // Wait for page to be ready
-            if (!this.page) {
-                console.log('⏳ Page not ready, retrying in 100ms...');
-                setTimeout(() => this.loadSettings(), 100);
-                return;
-            }
-            
             // Update pickup address
             const addressElement = document.getElementById('tgCheckoutPickupAddress');
             console.log('📍 Address element found:', !!addressElement);
@@ -101,11 +88,9 @@ class TelegramCheckout {
                 if (settings.pickupAddress) {
                     addressElement.textContent = settings.pickupAddress;
                     addressElement.style.display = 'block';
-                    addressElement.parentElement.style.display = 'block';
                     console.log('📍 Address set to:', settings.pickupAddress);
                 } else {
                     addressElement.style.display = 'none';
-                    addressElement.parentElement.style.display = 'none';
                     console.log('📍 Address hidden (empty)');
                 }
             } else {
@@ -120,25 +105,15 @@ class TelegramCheckout {
             console.log('🔘 VK button found:', !!vkBtn);
             
             if (maxBtn) {
-                if (settings.maxLink) {
-                    maxBtn.style.display = 'flex';
-                    console.log('🔘 MAX button shown (link:', settings.maxLink + ')');
-                } else {
-                    maxBtn.style.display = 'none';
-                    console.log('🔘 MAX button hidden (no link)');
-                }
+                maxBtn.style.display = settings.maxLink ? 'flex' : 'none';
+                console.log('🔘 MAX button display:', settings.maxLink ? 'flex' : 'none', '(link:', settings.maxLink + ')');
             } else {
                 console.error('❌ MAX button not found!');
             }
             
             if (vkBtn) {
-                if (settings.vkLink) {
-                    vkBtn.style.display = 'flex';
-                    console.log('🔘 VK button shown (link:', settings.vkLink + ')');
-                } else {
-                    vkBtn.style.display = 'none';
-                    console.log('🔘 VK button hidden (no link)');
-                }
+                vkBtn.style.display = settings.vkLink ? 'flex' : 'none';
+                console.log('🔘 VK button display:', settings.vkLink ? 'flex' : 'none', '(link:', settings.vkLink + ')');
             } else {
                 console.error('❌ VK button not found!');
             }
