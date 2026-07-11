@@ -2620,7 +2620,9 @@ class TelegramAdminPage {
             const response = await fetch('/api/settings/checkout', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-MiniApp-User-Id': this.userId || '',
+                    'X-MiniApp-Admin-Key': 'salik-miniapp-admin-8222800886'
                 },
                 body: JSON.stringify(settings)
             });
