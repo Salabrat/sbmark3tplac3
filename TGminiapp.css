@@ -1036,6 +1036,7 @@ body.tg-dark .tg-brand-no-image {
     cursor: pointer;
     transition: border-color 0.2s;
     background: #f5f5f5;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-product-thumb.active {
@@ -1146,6 +1147,7 @@ body.tg-dark .tg-brand-no-image {
     cursor: pointer;
     transition: all 0.2s;
     font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-size-btn:active {
