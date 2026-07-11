@@ -431,8 +431,7 @@ class TelegramAdminPage {
         this.loadDesignSettings();
         
         // Загружаем настройки оформления
-        // Закомментировано, чтобы не перезаписывать введенные пользователем данные
-        // this.loadCheckoutSettings();
+        this.loadCheckoutSettings();
     }
     
     // Вспомогательная функция для fetch с таймаутом
@@ -764,10 +763,9 @@ class TelegramAdminPage {
         }
         
         // Загружаем настройки оформления при переключении на режим оформления
-        // Закомментировано, чтобы не перезаписывать введенные пользователем данные
-        // if (mode === 'checkout') {
-        //     this.loadCheckoutSettings();
-        // }
+        if (mode === 'checkout') {
+            this.loadCheckoutSettings();
+        }
         
         // Загружаем настройки рулетки при переключении на режим рулетки
         if (mode === 'roulette') {
@@ -2583,17 +2581,17 @@ class TelegramAdminPage {
             const maxLinkInput = document.getElementById('tgCheckoutMaxLink');
             const vkLinkInput = document.getElementById('tgCheckoutVkLink');
             
-            if (pickupAddressInput && settings.pickupAddress) {
-                pickupAddressInput.value = settings.pickupAddress;
+            if (pickupAddressInput) {
+                pickupAddressInput.value = settings.pickupAddress || '';
             }
-            if (telegramLinkInput && settings.telegramLink) {
-                telegramLinkInput.value = settings.telegramLink;
+            if (telegramLinkInput) {
+                telegramLinkInput.value = settings.telegramLink || '';
             }
-            if (maxLinkInput && settings.maxLink) {
-                maxLinkInput.value = settings.maxLink;
+            if (maxLinkInput) {
+                maxLinkInput.value = settings.maxLink || '';
             }
-            if (vkLinkInput && settings.vkLink) {
-                vkLinkInput.value = settings.vkLink;
+            if (vkLinkInput) {
+                vkLinkInput.value = settings.vkLink || '';
             }
         } catch (error) {
             console.error('Error loading checkout settings:', error);
