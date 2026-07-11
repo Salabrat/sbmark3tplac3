@@ -82,30 +82,39 @@ class TelegramCheckout {
 
     async loadSettings() {
         try {
+            console.log('📖 Loading checkout settings...');
             const response = await fetch('/api/settings/checkout');
             const settings = await response.json();
+            console.log('✅ Loaded checkout settings:', settings);
             
             // Update pickup address
             const addressElement = document.getElementById('tgCheckoutPickupAddress');
-            if (addressElement && settings.pickupAddress) {
-                addressElement.textContent = settings.pickupAddress;
+            if (addressElement) {
+                if (settings.pickupAddress) {
+                    addressElement.textContent = settings.pickupAddress;
+                    addressElement.style.display = 'block';
+                } else {
+                    addressElement.style.display = 'none';
+                }
             }
             
             // Show/hide contact buttons based on settings
             const maxBtn = document.getElementById('tgCheckoutMaxBtn');
             const vkBtn = document.getElementById('tgCheckoutVkBtn');
             
-            if (settings.maxLink) {
-                maxBtn.style.display = 'flex';
+            if (maxBtn) {
+                maxBtn.style.display = settings.maxLink ? 'flex' : 'none';
+                console.log('MAX button display:', settings.maxLink ? 'flex' : 'none');
             }
             
-            if (settings.vkLink) {
-                vkBtn.style.display = 'flex';
+            if (vkBtn) {
+                vkBtn.style.display = settings.vkLink ? 'flex' : 'none';
+                console.log('VK button display:', settings.vkLink ? 'flex' : 'none');
             }
             
             this.settings = settings;
         } catch (error) {
-            console.error('Error loading settings:', error);
+            console.error('❌ Error loading settings:', error);
             // Fallback to defaults
             const addressElement = document.getElementById('tgCheckoutPickupAddress');
             if (addressElement) {

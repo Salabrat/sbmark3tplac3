@@ -1746,6 +1746,7 @@ app.get('/api/settings/checkout', (req, res) => {
 // Update checkout settings (requires admin)
 app.post('/api/settings/checkout', requireAdmin, (req, res) => {
     try {
+        console.log('📝 Received checkout settings update:', req.body);
         const { pickupAddress, telegramLink, maxLink, vkLink } = req.body || {};
         const data = fs.readFileSync(CHECKOUT_SETTINGS_FILE, 'utf8');
         const existing = JSON.parse(data);
@@ -1764,10 +1765,10 @@ app.post('/api/settings/checkout', requireAdmin, (req, res) => {
         }
 
         fs.writeFileSync(CHECKOUT_SETTINGS_FILE, JSON.stringify(existing, null, 2));
+        console.log('✅ Checkout settings saved:', existing);
         res.json({ success: true, settings: existing });
-        console.log('Checkout settings updated');
     } catch (error) {
-        console.error('Error saving checkout settings:', error);
+        console.error('❌ Error saving checkout settings:', error);
         res.status(500).json({ error: 'Failed to save checkout settings' });
     }
 });
