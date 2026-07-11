@@ -547,11 +547,57 @@ body.tg-dark .tg-nav-item.active {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .tg-page-loader-logo-wrap:not(:empty) {
     min-height: 300px;
     min-width: min(300px, calc(100vw - 30px));
+}
+
+/* Минималистичный загрузочный экран для видео */
+.tg-page-loader-logo-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.tg-page-loader-logo-wrap:not(:empty)::before {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Минималистичный спиннер внутри контейнера лого */
+.tg-page-loader-logo-wrap::after {
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    border-top-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    animation: tg-mini-spin 0.8s linear infinite;
+    z-index: 1;
+}
+
+.tg-page-loader-logo-wrap:not(:empty)::after {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes tg-mini-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .tg-page-loader-logo {
