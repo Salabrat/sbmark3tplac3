@@ -970,6 +970,7 @@ body.tg-dark .tg-brand-no-image {
     z-index: 10;
     backdrop-filter: blur(10px);
     transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-product-modal-close:active {
@@ -1110,6 +1111,7 @@ body.tg-dark .tg-brand-no-image {
     font-family: inherit;
     text-decoration: none;
     transition: opacity 0.2s;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-description-toggle:active {
@@ -1431,6 +1433,7 @@ body.tg-dark .tg-size-btn.active {
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-category-product-card:active {
@@ -1527,6 +1530,7 @@ body.tg-dark .tg-size-btn.active {
     transition: all 0.2s;
     padding: 0;
     flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-category-product-cart-btn:active,
@@ -1869,6 +1873,7 @@ body.tg-dark .tg-image-fullscreen-overlay {
     cursor: pointer;
     transition: background 0.2s;
     flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-cart-page-back:active {
@@ -2035,6 +2040,7 @@ body.tg-product-modal-open #tgCartFooter {
     align-items: center;
     justify-content: center;
     transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-cart-item-quantity-minus:active,
@@ -2073,6 +2079,7 @@ body.tg-product-modal-open #tgCartFooter {
     justify-content: center;
     transition: color 0.2s;
     flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-cart-item-remove:active {
@@ -2380,6 +2387,7 @@ body.tg-dark .tg-favorites-empty-btn::after {
     margin: 0 0 8px 0;
     cursor: pointer;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-favorite-item-name:active {
@@ -2495,6 +2503,7 @@ body.tg-dark .tg-favorites-empty-btn::after {
     padding: 8px 12px;
     transition: all 0.2s;
     align-self: stretch; /* Кнопка по всей ширине текстового блока */
+    -webkit-tap-highlight-color: transparent;
     justify-content: center;
     text-align: center;
     font-weight: 500;
@@ -2588,6 +2597,7 @@ body.tg-dark .tg-favorites-empty-btn::after {
     cursor: pointer;
     margin-top: 28px;
     font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
     box-shadow: 0 30px 55px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(26px);
     -webkit-backdrop-filter: blur(26px);
@@ -2891,6 +2901,7 @@ body.tg-dark .tg-profile-item-chevron {
     cursor: pointer;
     transition: background 0.2s;
     flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-admin-page-back:active {
@@ -2920,6 +2931,7 @@ body.tg-dark .tg-profile-item-chevron {
     cursor: pointer;
     transition: background 0.2s;
     flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-admin-page-site-btn:active {
@@ -2956,6 +2968,7 @@ body.tg-dark .tg-profile-item-chevron {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
     font-family: inherit;
     text-align: center;
 }
@@ -3056,6 +3069,7 @@ body.tg-dark .tg-profile-item-chevron {
     background: #ffffff;
     font-size: 13px;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-admin-size-btn.active {
@@ -3089,6 +3103,7 @@ body.tg-dark .tg-profile-item-chevron {
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-admin-status {
@@ -3141,6 +3156,7 @@ body.tg-dark .tg-profile-item-chevron {
     cursor: pointer;
     transition: background 0.2s;
     flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-privacy-page-back:active {
