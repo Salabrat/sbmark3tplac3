@@ -826,11 +826,6 @@ class TelegramNavigation {
     createCoverLoader() {
         const loader = document.createElement('div');
         loader.className = 'tg-cover-loader';
-        for (let i = 0; i < 3; i++) {
-            const dot = document.createElement('span');
-            dot.className = 'tg-cover-loader-dot';
-            loader.appendChild(dot);
-        }
         loader.setProgress = () => {};
         return loader;
     }

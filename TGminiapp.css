@@ -131,6 +131,28 @@ body.tg-dark .tg-cover-loader::before {
     pointer-events: none;
 }
 
+/* Скрыть стандартный play button браузера */
+.tg-logo-content video::-webkit-media-controls {
+    display: none !important;
+}
+
+.tg-logo-content video::-webkit-media-controls-panel {
+    display: none !important;
+}
+
+.tg-logo-content video::-webkit-media-controls-play-button {
+    display: none !important;
+}
+
+.tg-logo-content video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+}
+
+/* Скрыть play button overlay в Firefox */
+.tg-logo-content video::-moz-media-controls {
+    display: none !important;
+}
+
 .tg-logo-content:empty {
     min-height: 107px; /* Минимальная высота если нет изображения */
     aspect-ratio: auto;
