@@ -754,6 +754,10 @@ class TelegramMiniAppLoader {
             video.style.objectFit = 'cover';
             video.style.aspectRatio = '16 / 9';
             video.style.display = 'block';
+            
+            // Set transparent poster to hide browser play button overlay
+            video.poster = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+            
             video.setAttribute('autoplay', '');
             video.setAttribute('loop', '');
             video.setAttribute('muted', '');

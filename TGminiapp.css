@@ -153,6 +153,21 @@ body.tg-dark .tg-cover-loader::before {
     display: none !important;
 }
 
+/* Скрыть play button overlay в Chrome/Safari */
+.tg-logo-content video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+}
+
+/* Скрыть poster image overlay */
+.tg-logo-content video::poster {
+    display: none !important;
+}
+
+/* Принудительно скрыть любые overlay элементы */
+.tg-logo-content video::-webkit-shadow-canvas {
+    display: none !important;
+}
+
 .tg-logo-content:empty {
     min-height: 107px; /* Минимальная высота если нет изображения */
     aspect-ratio: auto;
