@@ -425,6 +425,7 @@ const CATEGORIES_FILE = path.join(__dirname, 'categories.json');
 const SITE_SETTINGS_FILE = path.join(__dirname, 'site-settings.json');
 const ADMIN_USERS_FILE = path.join(__dirname, 'admin-users.json');
 const TELEGRAM_DESIGN_SETTINGS_FILE = path.join(__dirname, 'telegram-design-settings.json');
+const CHECKOUT_SETTINGS_FILE = path.join(__dirname, 'checkout-settings.json');
 
 // Initialize products file if it doesn't exist
 if (!fs.existsSync(PRODUCTS_FILE)) {
@@ -507,6 +508,18 @@ if (!fs.existsSync(SITE_SETTINGS_FILE)) {
     };
     fs.writeFileSync(SITE_SETTINGS_FILE, JSON.stringify(initialSettings, null, 2));
     console.log('Created site-settings.json file');
+}
+
+// Initialize checkout settings file if it doesn't exist
+if (!fs.existsSync(CHECKOUT_SETTINGS_FILE)) {
+    const initialSettings = {
+        pickupAddress: '',
+        telegramLink: 'pravitelstvo_russian',
+        maxLink: '',
+        vkLink: ''
+    };
+    fs.writeFileSync(CHECKOUT_SETTINGS_FILE, JSON.stringify(initialSettings, null, 2));
+    console.log('Created checkout-settings.json file');
 }
 
 // Initialize button texts file if it doesn't exist
@@ -1716,6 +1729,46 @@ app.post('/api/site-settings', requireAdmin, (req, res) => {
     } catch (error) {
         console.error('Error saving site settings:', error);
         res.status(500).json({ error: 'Failed to save site settings' });
+    }
+});
+
+// Get checkout settings (public)
+app.get('/api/settings/checkout', (req, res) => {
+    try {
+        const data = fs.readFileSync(CHECKOUT_SETTINGS_FILE, 'utf8');
+        res.json(JSON.parse(data));
+    } catch (error) {
+        console.error('Error reading checkout settings:', error);
+        res.status(500).json({ error: 'Failed to read checkout settings' });
+    }
+});
+
+// Update checkout settings (requires admin)
+app.post('/api/settings/checkout', requireAdmin, (req, res) => {
+    try {
+        const { pickupAddress, telegramLink, maxLink, vkLink } = req.body || {};
+        const data = fs.readFileSync(CHECKOUT_SETTINGS_FILE, 'utf8');
+        const existing = JSON.parse(data);
+
+        if (typeof pickupAddress === 'string') {
+            existing.pickupAddress = pickupAddress.trim();
+        }
+        if (typeof telegramLink === 'string') {
+            existing.telegramLink = telegramLink.trim();
+        }
+        if (typeof maxLink === 'string') {
+            existing.maxLink = maxLink.trim();
+        }
+        if (typeof vkLink === 'string') {
+            existing.vkLink = vkLink.trim();
+        }
+
+        fs.writeFileSync(CHECKOUT_SETTINGS_FILE, JSON.stringify(existing, null, 2));
+        res.json({ success: true, settings: existing });
+        console.log('Checkout settings updated');
+    } catch (error) {
+        console.error('Error saving checkout settings:', error);
+        res.status(500).json({ error: 'Failed to save checkout settings' });
     }
 });
 

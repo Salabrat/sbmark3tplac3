@@ -159,6 +159,9 @@ class TelegramAdminPage {
                         <button type="button" class="tg-admin-menu-item" data-mode="roulette">
                             <span>Рулетка</span>
                         </button>
+                        <button type="button" class="tg-admin-menu-item" data-mode="checkout">
+                            <span>Оформление</span>
+                        </button>
                     </div>
                     <div class="tg-admin-status" id="tgAdminStatus"></div>
                     
@@ -383,6 +386,31 @@ class TelegramAdminPage {
 
                         <button type="button" class="tg-admin-submit-btn" id="tgAdminRouletteSubmitBtn">Сохранить настройки рулетки</button>
                     </form>
+
+                    <!-- Форма настройки оформления заказа -->
+                    <form class="tg-admin-form" id="tgAdminCheckoutForm" data-form="checkout" style="display: none;">
+                        <div class="tg-admin-field">
+                            <label for="tgCheckoutPickupAddress">Адрес самовывоза</label>
+                            <textarea id="tgCheckoutPickupAddress" rows="3" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101"></textarea>
+                            <small style="color: #999; font-size: 11px; margin-top: 4px; display: block;">Этот адрес будет показан на странице оформления заказа</small>
+                        </div>
+                        <div class="tg-admin-field">
+                            <label for="tgCheckoutTelegramLink">Ссылка Telegram (обязательно)</label>
+                            <input type="text" id="tgCheckoutTelegramLink" placeholder="pravitelstvo_russian" required />
+                            <small style="color: #999; font-size: 11px; margin-top: 4px; display: block;">Username без @. Например: pravitelstvo_russian</small>
+                        </div>
+                        <div class="tg-admin-field">
+                            <label for="tgCheckoutMaxLink">Ссылка MAX (опционально)</label>
+                            <input type="text" id="tgCheckoutMaxLink" placeholder="https://max.com/..." />
+                            <small style="color: #999; font-size: 11px; margin-top: 4px; display: block;">Полная ссылка на диалог в MAX</small>
+                        </div>
+                        <div class="tg-admin-field">
+                            <label for="tgCheckoutVkLink">Ссылка ВК (опционально)</label>
+                            <input type="text" id="tgCheckoutVkLink" placeholder="https://vk.me/..." />
+                            <small style="color: #999; font-size: 11px; margin-top: 4px; display: block;">Полная ссылка на диалог в ВКонтакте</small>
+                        </div>
+                        <button type="button" class="tg-admin-submit-btn" id="tgAdminCheckoutSubmitBtn">Сохранить настройки оформления</button>
+                    </form>
                 </div>
             </div>
         `;
@@ -401,6 +429,9 @@ class TelegramAdminPage {
         
         // Загружаем настройки дизайна
         this.loadDesignSettings();
+        
+        // Загружаем настройки оформления
+        this.loadCheckoutSettings();
     }
     
     // Вспомогательная функция для fetch с таймаутом
@@ -584,6 +615,10 @@ class TelegramAdminPage {
         if (rouletteSubmitBtn) rouletteSubmitBtn.addEventListener('click', () => this.handleRouletteSubmit());
         if (rouletteAddSlotBtn) rouletteAddSlotBtn.addEventListener('click', () => this.addRouletteSlot());
         
+        // Checkout event listeners
+        const checkoutSubmitBtn = document.getElementById('tgAdminCheckoutSubmitBtn');
+        if (checkoutSubmitBtn) checkoutSubmitBtn.addEventListener('click', () => this.handleCheckoutSubmit());
+        
         if (logoImageRemoveBtn) logoImageRemoveBtn.addEventListener('click', () => this.removeLogoImage());
         if (loadingScreenImageRemoveBtn) loadingScreenImageRemoveBtn.addEventListener('click', () => this.removeLoadingScreenImage());
         if (backgroundImageRemoveBtn) backgroundImageRemoveBtn.addEventListener('click', () => this.removeBackgroundImage());
@@ -725,6 +760,11 @@ class TelegramAdminPage {
         // Загружаем настройки дизайна при переключении на режим дизайна
         if (mode === 'design') {
             this.loadDesignSettings();
+        }
+        
+        // Загружаем настройки оформления при переключении на режим оформления
+        if (mode === 'checkout') {
+            this.loadCheckoutSettings();
         }
         
         // Загружаем настройки рулетки при переключении на режим рулетки
@@ -2529,6 +2569,71 @@ class TelegramAdminPage {
             hasBackground: !!settings.backgroundImage,
             catalogCovers: catalogCovers.length
         });
+    }
+
+    async loadCheckoutSettings() {
+        try {
+            const response = await fetch('/api/settings/checkout');
+            const settings = await response.json();
+            
+            const pickupAddressInput = document.getElementById('tgCheckoutPickupAddress');
+            const telegramLinkInput = document.getElementById('tgCheckoutTelegramLink');
+            const maxLinkInput = document.getElementById('tgCheckoutMaxLink');
+            const vkLinkInput = document.getElementById('tgCheckoutVkLink');
+            
+            if (pickupAddressInput && settings.pickupAddress) {
+                pickupAddressInput.value = settings.pickupAddress;
+            }
+            if (telegramLinkInput && settings.telegramLink) {
+                telegramLinkInput.value = settings.telegramLink;
+            }
+            if (maxLinkInput && settings.maxLink) {
+                maxLinkInput.value = settings.maxLink;
+            }
+            if (vkLinkInput && settings.vkLink) {
+                vkLinkInput.value = settings.vkLink;
+            }
+        } catch (error) {
+            console.error('Error loading checkout settings:', error);
+        }
+    }
+
+    async handleCheckoutSubmit() {
+        const pickupAddress = document.getElementById('tgCheckoutPickupAddress').value.trim();
+        const telegramLink = document.getElementById('tgCheckoutTelegramLink').value.trim();
+        const maxLink = document.getElementById('tgCheckoutMaxLink').value.trim();
+        const vkLink = document.getElementById('tgCheckoutVkLink').value.trim();
+        
+        if (!telegramLink) {
+            this.showStatus('Ссылка Telegram обязательна', 'error');
+            return;
+        }
+        
+        const settings = {
+            pickupAddress,
+            telegramLink,
+            maxLink,
+            vkLink
+        };
+        
+        try {
+            const response = await fetch('/api/settings/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(settings)
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to save checkout settings');
+            }
+            
+            this.showStatus('Настройки оформления сохранены', 'success');
+        } catch (error) {
+            console.error('Error saving checkout settings:', error);
+            this.showStatus('Ошибка при сохранении настроек', 'error');
+        }
     }
 
     applyDesignSettings(settings) {

@@ -25,67 +25,35 @@ class TelegramCheckout {
                 </div>
                 
                 <div class="tg-checkout-page-content">
-                    <div class="tg-checkout-delivery-toggle">
-                        <button class="tg-checkout-toggle-btn ${this.deliveryType === 'delivery' ? 'active' : ''}" data-type="delivery">
-                            Доставка
-                        </button>
-                        <button class="tg-checkout-toggle-btn ${this.deliveryType === 'pickup' ? 'active' : ''}" data-type="pickup">
-                            Самовывоз
-                        </button>
+                    <div class="tg-checkout-pickup-info">
+                        <div class="tg-checkout-pickup-label">Самовывоз</div>
+                        <div class="tg-checkout-pickup-address" id="tgCheckoutPickupAddress">
+                            Загрузка адреса...
+                        </div>
                     </div>
                     
-                    <form class="tg-checkout-form" id="tgCheckoutForm">
-                        <div class="tg-checkout-field">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
+                    <div class="tg-checkout-contact-buttons">
+                        <button class="tg-checkout-contact-btn tg-contact-telegram" id="tgCheckoutTelegramBtn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.442-.751-.244-1.349-.374-1.297-.789.027-.216.324-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.015 3.333-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.121.099.154.232.17.325.015.094.034.31.019.478z"/>
                             </svg>
-                            <input type="text" id="tgCheckoutFullName" placeholder="ФИО" required>
-                        </div>
+                            Связаться в Telegram
+                        </button>
                         
-                        <div class="tg-checkout-field">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        <button class="tg-checkout-contact-btn tg-contact-max" id="tgCheckoutMaxBtn" style="display: none;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                             </svg>
-                            <input type="tel" id="tgCheckoutPhone" placeholder="Телефон" required>
-                        </div>
+                            Связаться в MAX
+                        </button>
                         
-                        <div class="tg-checkout-field">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        <button class="tg-checkout-contact-btn tg-contact-vk" id="tgCheckoutVkBtn" style="display: none;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12.785 16.371c.742.722 1.533 1.406 2.198 2.22.295.358.58.724.795 1.14.26.508.093 1.074-.336 1.384-1.321.963-1.321.963-1.321.963-.426.286-.926.453-1.432.478-.933.048-1.766-.246-2.523-.768-.821-.564-1.549-1.252-2.299-1.915-.314-.278-.646-.537-1.035-.711-.375-.168-.711-.072-.939.267-.236.351-.288.76-.298 1.176-.016.636-.048.636-.686.636-1.078 0-2.156-.012-3.234-.012-.734 0-1.426-.228-2.058-.645-1.133-.75-2.029-1.734-2.819-2.819-1.518-2.058-2.674-4.312-3.719-6.633-.375-.846-.695-1.717-.953-2.607-.096-.322-.032-.5.336-.5.945-.012 1.89-.012 2.835-.012.398 0 .672.168.834.534.546 1.284 1.21 2.494 2.021 3.617.222.311.445.621.768.846.354.247.621.165.787-.234.108-.264.15-.558.168-.846.048-.798.048-1.596.024-2.394-.024-.534-.275-.879-.807-.98-.263-.048-.223-.144-.096-.323.18-.258.438-.421.822-.421 1.321.012 2.643.012 3.964.012.275 0 .55.06.807.18.414.192.546.522.582.945.048.534.048 1.068.024 1.602-.012.322-.024.644.012.966.06.522.322.685.834.383.644-.371 1.092-.933 1.525-1.495.621-.809 1.152-1.682 1.647-2.579.18-.322.438-.475.807-.475 1.165.012 2.33.012 3.495.012.144 0 .288.012.432.036.621.108.792.383.633.98-.252.921-.879 1.647-1.525 2.361-.645.714-1.332 1.386-2.074 2.007z"/>
                             </svg>
-                            <input type="text" id="tgCheckoutComment" placeholder="Комментарий">
-                        </div>
-                        
-                        <div class="tg-checkout-field" id="tgCheckoutCityField" style="display: ${this.deliveryType === 'delivery' ? 'flex' : 'none'};">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                            </svg>
-                            <input type="text" id="tgCheckoutCity" placeholder="Город доставки" ${this.deliveryType === 'delivery' ? 'required' : ''}>
-                        </div>
-                        
-                        <div class="tg-checkout-field" id="tgCheckoutPickupField" style="display: ${this.deliveryType === 'pickup' ? 'flex' : 'none'};">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            <input type="text" id="tgCheckoutPickup" placeholder="Пункт выдачи KontoraStore_Bot" ${this.deliveryType === 'pickup' ? 'required' : ''}>
-                        </div>
-                    </form>
-                    
-                    <button class="tg-checkout-contact-btn" id="tgCheckoutContactBtn">
-                        Связаться с продавцом
-                    </button>
-                    
-                    <div class="tg-checkout-agreement">
-                        Продолжая оформление заказа, вы соглашаетесь с
-                        <a href="#" class="tg-checkout-agreement-link">Политикой обработки персональных данных</a>
+                            Связаться в ВК
+                        </button>
                     </div>
-                    
-                    <button class="tg-checkout-submit-btn" id="tgCheckoutSubmitBtn">
-                        Оформить заказ
-                    </button>
                 </div>
             </div>
         `;
@@ -98,69 +66,57 @@ class TelegramCheckout {
         const backBtn = this.page.querySelector('.tg-checkout-page-back');
         backBtn.addEventListener('click', () => this.close());
         
-        // Delivery type toggle
-        this.page.querySelectorAll('.tg-checkout-toggle-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const type = btn.dataset.type;
-                this.setDeliveryType(type);
-            });
-        });
+        // Contact buttons
+        const telegramBtn = document.getElementById('tgCheckoutTelegramBtn');
+        telegramBtn.addEventListener('click', () => this.contactSeller('telegram'));
         
-        // Form submit
-        const submitBtn = document.getElementById('tgCheckoutSubmitBtn');
-        submitBtn.addEventListener('click', () => this.submitOrder());
+        const maxBtn = document.getElementById('tgCheckoutMaxBtn');
+        maxBtn.addEventListener('click', () => this.contactSeller('max'));
         
-        // Contact seller button
-        const contactBtn = document.getElementById('tgCheckoutContactBtn');
-        contactBtn.addEventListener('click', () => this.contactSeller());
+        const vkBtn = document.getElementById('tgCheckoutVkBtn');
+        vkBtn.addEventListener('click', () => this.contactSeller('vk'));
         
-        // Load user data from Telegram if available
-        this.loadUserData();
+        // Load settings
+        this.loadSettings();
     }
 
-    loadUserData() {
-        if (window.telegramWebApp && window.telegramWebApp.isTelegram) {
-            const user = window.telegramWebApp.getUserData();
-            if (user) {
-                // Pre-fill phone if available
-                const phoneInput = document.getElementById('tgCheckoutPhone');
-                if (phoneInput && user.phone_number) {
-                    phoneInput.value = '+' + user.phone_number;
-                }
+    async loadSettings() {
+        try {
+            const response = await fetch('/api/settings/checkout');
+            const settings = await response.json();
+            
+            // Update pickup address
+            const addressElement = document.getElementById('tgCheckoutPickupAddress');
+            if (addressElement && settings.pickupAddress) {
+                addressElement.textContent = settings.pickupAddress;
             }
-        }
-    }
-
-    setDeliveryType(type) {
-        this.deliveryType = type;
-        
-        // Update toggle buttons
-        this.page.querySelectorAll('.tg-checkout-toggle-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.type === type);
-        });
-        
-        // Show/hide fields
-        const cityField = document.getElementById('tgCheckoutCityField');
-        const pickupField = document.getElementById('tgCheckoutPickupField');
-        const cityInput = document.getElementById('tgCheckoutCity');
-        const pickupInput = document.getElementById('tgCheckoutPickup');
-        
-        if (type === 'delivery') {
-            cityField.style.display = 'flex';
-            pickupField.style.display = 'none';
-            cityInput.required = true;
-            pickupInput.required = false;
-        } else {
-            cityField.style.display = 'none';
-            pickupField.style.display = 'flex';
-            cityInput.required = false;
-            pickupInput.required = true;
+            
+            // Show/hide contact buttons based on settings
+            const maxBtn = document.getElementById('tgCheckoutMaxBtn');
+            const vkBtn = document.getElementById('tgCheckoutVkBtn');
+            
+            if (settings.maxLink) {
+                maxBtn.style.display = 'flex';
+            }
+            
+            if (settings.vkLink) {
+                vkBtn.style.display = 'flex';
+            }
+            
+            this.settings = settings;
+        } catch (error) {
+            console.error('Error loading settings:', error);
+            // Fallback to defaults
+            const addressElement = document.getElementById('tgCheckoutPickupAddress');
+            if (addressElement) {
+                addressElement.textContent = 'Адрес не указан';
+            }
         }
     }
 
     open() {
         this.page.style.display = 'block';
-        this.loadUserData();
+        this.loadSettings();
         
         // Show back button in Telegram
         if (window.telegramWebApp && window.telegramWebApp.isTelegram) {
@@ -203,107 +159,8 @@ class TelegramCheckout {
         }
     }
 
-    async submitOrder() {
-        const form = document.getElementById('tgCheckoutForm');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-        
-        // Get form data
-        const orderData = {
-            fullName: document.getElementById('tgCheckoutFullName').value.trim(),
-            phone: document.getElementById('tgCheckoutPhone').value.trim(),
-            comment: document.getElementById('tgCheckoutComment').value.trim(),
-            deliveryType: this.deliveryType,
-            city: this.deliveryType === 'delivery' ? document.getElementById('tgCheckoutCity').value.trim() : null,
-            pickupPoint: this.deliveryType === 'pickup' ? document.getElementById('tgCheckoutPickup').value.trim() : null,
-            items: window.telegramCart.items.map(item => ({
-                productId: item.productId,
-                productName: item.product.name,
-                size: item.size,
-                quantity: item.quantity,
-                price: window.telegramCart && typeof window.telegramCart.getItemUnitPrice === 'function'
-                    ? window.telegramCart.getItemUnitPrice(item)
-                    : item.price
-            })),
-            total: window.telegramCart.getTotal()
-        };
-        
-        // Get user info from Telegram
-        let username = 'Не указан';
-        if (window.telegramWebApp && window.telegramWebApp.isTelegram) {
-            const user = window.telegramWebApp.getUserData();
-            if (user) {
-                if (user.username) {
-                    username = '@' + user.username;
-                } else if (user.first_name) {
-                    username = user.first_name + (user.last_name ? ' ' + user.last_name : '');
-                } else {
-                    username = 'Пользователь Telegram';
-                }
-            }
-        }
-        
-        orderData.username = username;
-        
-        // Show loading
-        const submitBtn = document.getElementById('tgCheckoutSubmitBtn');
-        const originalText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Отправка...';
-        
+    async contactSeller(platform) {
         try {
-            // Send order to server
-            const response = await fetch('/api/telegram/order', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(orderData)
-            });
-            
-            if (!response.ok) {
-                throw new Error('Failed to submit order');
-            }
-            
-            // Clear cart
-            window.telegramCart.clear();
-            
-            // Show success
-            if (window.telegramWebApp) {
-                window.telegramWebApp.showNotification('Заказ успешно оформлен!');
-                window.telegramWebApp.hapticFeedback('success');
-            }
-            
-            // Close checkout and cart
-            this.close();
-            if (window.telegramCartPage) {
-                window.telegramCartPage.close();
-            }
-            
-            // Navigate to home
-            if (window.telegramNavigation) {
-                window.telegramNavigation.showPage('home');
-            }
-            
-        } catch (error) {
-            console.error('Error submitting order:', error);
-            if (window.telegramWebApp) {
-                window.telegramWebApp.showNotification('Ошибка при оформлении заказа');
-                window.telegramWebApp.hapticFeedback('error');
-            }
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
-        }
-    }
-
-    async contactSeller() {
-        try {
-            // Get telegram settings
-            const settings = await this.getTelegramSettings();
-            
             // Get cart items
             const cartItems = window.telegramCart ? window.telegramCart.items : [];
             
@@ -314,7 +171,7 @@ class TelegramCheckout {
                 return;
             }
             
-            // Build message (без строки "Итого")
+            // Build message (preserving current format)
             let message = 'Здравствуйте! Заинтересовал данный товар:\n\n';
             cartItems.forEach((item, index) => {
                 const product = item.product;
@@ -339,11 +196,31 @@ class TelegramCheckout {
             // Encode message for URL
             const encodedMessage = encodeURIComponent(message);
             
-            // Create Telegram URL
-            const telegramUrl = `https://t.me/${settings.telegramUsername}?text=${encodedMessage}`;
+            let url = '';
             
-            // Open Telegram in new tab
-            window.open(telegramUrl, '_blank');
+            if (platform === 'telegram') {
+                const telegramUsername = this.settings?.telegramLink || 'pravitelstvo_russian';
+                url = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
+            } else if (platform === 'max') {
+                const maxLink = this.settings?.maxLink;
+                if (maxLink) {
+                    url = `${maxLink}?text=${encodedMessage}`;
+                } else {
+                    console.error('MAX link not configured');
+                    return;
+                }
+            } else if (platform === 'vk') {
+                const vkLink = this.settings?.vkLink;
+                if (vkLink) {
+                    url = `${vkLink}?message=${encodedMessage}`;
+                } else {
+                    console.error('VK link not configured');
+                    return;
+                }
+            }
+            
+            // Open in new tab
+            window.open(url, '_blank');
             
             // Haptic feedback
             if (window.telegramWebApp) {
@@ -351,9 +228,9 @@ class TelegramCheckout {
             }
         } catch (error) {
             console.error('Error contacting seller:', error);
-            // Fallback to default
-            const defaultUrl = 'https://t.me/pravitelstvo_russian';
-            window.open(defaultUrl, '_blank');
+            if (window.telegramWebApp) {
+                window.telegramWebApp.showNotification('Ошибка при открытии диалога');
+            }
         }
     }
 
@@ -369,26 +246,6 @@ class TelegramCheckout {
         }
         const base = window.location.origin;
         return url.startsWith('/') ? base + url : base + '/' + url;
-    }
-
-    async getTelegramSettings() {
-        try {
-            // Try to get settings from localStorage first
-            const savedSettings = localStorage.getItem('telegram_settings');
-            if (savedSettings) {
-                return JSON.parse(savedSettings);
-            }
-            
-            // Default settings
-            return {
-                telegramUsername: 'pravitelstvo_russian'
-            };
-        } catch (error) {
-            console.error('Error getting telegram settings:', error);
-            return {
-                telegramUsername: 'pravitelstvo_russian'
-            };
-        }
     }
 
     formatPrice(price) {

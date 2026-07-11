@@ -3299,129 +3299,132 @@ body.tg-dark .tg-profile-item-chevron {
     padding-bottom: calc(100px + env(safe-area-inset-bottom));
 }
 
-.tg-checkout-delivery-toggle {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    background: #f5f5f5;
-    border-radius: 12px;
-    padding: 4px;
+.tg-checkout-pickup-info {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-.tg-checkout-toggle-btn {
-    flex: 1;
-    height: 44px;
-    border: none;
-    background: transparent;
-    border-radius: 8px;
+.tg-checkout-pickup-label {
     font-size: 14px;
-    font-weight: 500;
-    color: #666;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: inherit;
-}
-
-.tg-checkout-toggle-btn.active {
-    background: #ffffff;
-    color: #000000;
     font-weight: 600;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #666;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.tg-checkout-form {
-    margin-bottom: 20px;
-}
-
-.tg-checkout-field {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.tg-checkout-field svg {
-    width: 20px;
-    height: 20px;
-    color: #999;
-    flex-shrink: 0;
-}
-
-.tg-checkout-field input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    font-size: 14px;
+.tg-checkout-pickup-address {
+    font-size: 16px;
+    font-weight: 500;
     color: #000000;
-    font-family: inherit;
-    outline: none;
+    line-height: 1.4;
 }
 
-.tg-checkout-field input::placeholder {
-    color: #999;
-}
-
-.tg-checkout-field input:invalid {
-    color: #ff4444;
+.tg-checkout-contact-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .tg-checkout-contact-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
     width: 100%;
-    height: 48px;
-    background: #f5f5f5;
-    border: none;
-    border-radius: 12px;
+    height: 56px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     font-size: 16px;
     font-weight: 600;
-    color: #000000;
     cursor: pointer;
-    margin-bottom: 20px;
-    font-family: inherit;
-    transition: background 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, opacity 0.2s, background 0.2s;
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.tg-checkout-contact-btn svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
 }
 
 .tg-checkout-contact-btn:active {
-    background: #e0e0e0;
+    transform: scale(0.98);
 }
 
-.tg-checkout-agreement {
-    font-size: 12px;
-    color: #666;
-    text-align: center;
-    margin-bottom: 16px;
-    line-height: 1.5;
-}
-
-.tg-checkout-agreement-link {
-    color: #0088cc;
-    text-decoration: none;
-}
-
-.tg-checkout-submit-btn {
-    width: 100%;
-    height: 52px;
-    background: #0088cc;
+/* Telegram button - blue gradient */
+.tg-contact-telegram {
+    background: linear-gradient(135deg, rgba(0, 136, 204, 0.85), rgba(0, 102, 153, 0.7));
     color: #ffffff;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-    font-family: inherit;
+    border-color: rgba(100, 180, 255, 0.4);
+    box-shadow: 0 12px 26px rgba(0, 136, 204, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+    animation: tg-liquid-glass-telegram 8s ease-in-out infinite;
 }
 
-.tg-checkout-submit-btn:active {
-    background: #006699;
+.tg-contact-telegram::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: -45%;
+    width: 42%;
+    height: 220%;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0.5) 48%, rgba(255, 255, 255, 0) 82%);
+    transform: translateX(-220%) rotate(14deg);
+    animation: tg-button-shimmer 2.8s ease-in-out infinite;
+    pointer-events: none;
 }
 
-.tg-checkout-submit-btn:disabled {
-    background: #cccccc;
-    cursor: not-allowed;
+/* MAX button - green gradient */
+.tg-contact-max {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.85), rgba(22, 163, 74, 0.7));
+    color: #ffffff;
+    border-color: rgba(140, 255, 185, 0.4);
+    box-shadow: 0 12px 26px rgba(34, 197, 94, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+    animation: tg-liquid-glass-max 8s ease-in-out infinite;
+}
+
+.tg-contact-max::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: -45%;
+    width: 42%;
+    height: 220%;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0.5) 48%, rgba(255, 255, 255, 0) 82%);
+    transform: translateX(-220%) rotate(14deg);
+    animation: tg-button-shimmer 2.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* VK button - purple gradient */
+.tg-contact-vk {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.85), rgba(103, 58, 183, 0.7));
+    color: #ffffff;
+    border-color: rgba(200, 150, 255, 0.4);
+    box-shadow: 0 12px 26px rgba(138, 43, 226, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+    animation: tg-liquid-glass-vk 8s ease-in-out infinite;
+}
+
+.tg-contact-vk::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: -45%;
+    width: 42%;
+    height: 220%;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0.5) 48%, rgba(255, 255, 255, 0) 82%);
+    transform: translateX(-220%) rotate(14deg);
+    animation: tg-button-shimmer 2.8s ease-in-out infinite;
+    pointer-events: none;
 }
 
 /* Ensure hero image is visible */
@@ -4381,5 +4384,44 @@ body.tg-dark .tg-wins-spin-btn {
 }
 body.tg-dark .tg-wins-spin-btn-inner {
     color: #0a84ff;
-    background: linear-gradient(135deg, rgba(10,132,255,0.15) 0%, rgba(10,132,255,0.06) 100%);
+}
+
+/* Liquid glass glow animations */
+@keyframes tg-liquid-glass-telegram {
+    0%, 100% {
+        box-shadow: 0 12px 26px rgba(0, 136, 204, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 16px 32px rgba(0, 136, 204, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+    }
+}
+
+@keyframes tg-liquid-glass-max {
+    0%, 100% {
+        box-shadow: 0 12px 26px rgba(34, 197, 94, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 16px 32px rgba(34, 197, 94, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+    }
+}
+
+@keyframes tg-liquid-glass-vk {
+    0%, 100% {
+        box-shadow: 0 12px 26px rgba(138, 43, 226, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 16px 32px rgba(138, 43, 226, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.15);
+    }
+}
+
+@keyframes tg-button-shimmer {
+    0% {
+        transform: translateX(-220%) rotate(14deg);
+    }
+    50% {
+        transform: translateX(220%) rotate(14deg);
+    }
+    100% {
+        transform: translateX(-220%) rotate(14deg);
+    }
 }
