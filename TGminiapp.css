@@ -229,6 +229,7 @@ body.tg-dark .tg-cover-loader::before {
     color: #666;
     cursor: pointer;
     font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-view-all-btn:active {
@@ -797,6 +798,7 @@ body.tg-loaded:has(.tg-image-fullscreen.active) .tg-bottom-nav {
     min-height: 140px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tg-brand-card:active {
