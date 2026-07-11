@@ -1,6 +1,6 @@
 {
-  "pickupAddress": "",
+  "pickupAddress": "г. Москва, ул. Примерная, д. 1, офис 101",
   "telegramLink": "pravitelstvo_russian",
-  "maxLink": "",
-  "vkLink": ""
+  "maxLink": "https://max.com/example",
+  "vkLink": "https://vk.me/example"
 }

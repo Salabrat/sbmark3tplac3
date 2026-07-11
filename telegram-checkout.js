@@ -87,6 +87,13 @@ class TelegramCheckout {
             const settings = await response.json();
             console.log('✅ Loaded checkout settings:', settings);
             
+            // Wait for page to be ready
+            if (!this.page) {
+                console.log('⏳ Page not ready, retrying in 100ms...');
+                setTimeout(() => this.loadSettings(), 100);
+                return;
+            }
+            
             // Update pickup address
             const addressElement = document.getElementById('tgCheckoutPickupAddress');
             console.log('📍 Address element found:', !!addressElement);
@@ -94,9 +101,11 @@ class TelegramCheckout {
                 if (settings.pickupAddress) {
                     addressElement.textContent = settings.pickupAddress;
                     addressElement.style.display = 'block';
+                    addressElement.parentElement.style.display = 'block';
                     console.log('📍 Address set to:', settings.pickupAddress);
                 } else {
                     addressElement.style.display = 'none';
+                    addressElement.parentElement.style.display = 'none';
                     console.log('📍 Address hidden (empty)');
                 }
             } else {
@@ -111,15 +120,25 @@ class TelegramCheckout {
             console.log('🔘 VK button found:', !!vkBtn);
             
             if (maxBtn) {
-                maxBtn.style.display = settings.maxLink ? 'flex' : 'none';
-                console.log('🔘 MAX button display:', settings.maxLink ? 'flex' : 'none', '(link:', settings.maxLink + ')');
+                if (settings.maxLink) {
+                    maxBtn.style.display = 'flex';
+                    console.log('🔘 MAX button shown (link:', settings.maxLink + ')');
+                } else {
+                    maxBtn.style.display = 'none';
+                    console.log('🔘 MAX button hidden (no link)');
+                }
             } else {
                 console.error('❌ MAX button not found!');
             }
             
             if (vkBtn) {
-                vkBtn.style.display = settings.vkLink ? 'flex' : 'none';
-                console.log('🔘 VK button display:', settings.vkLink ? 'flex' : 'none', '(link:', settings.vkLink + ')');
+                if (settings.vkLink) {
+                    vkBtn.style.display = 'flex';
+                    console.log('🔘 VK button shown (link:', settings.vkLink + ')');
+                } else {
+                    vkBtn.style.display = 'none';
+                    console.log('🔘 VK button hidden (no link)');
+                }
             } else {
                 console.error('❌ VK button not found!');
             }
