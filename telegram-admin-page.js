@@ -2632,6 +2632,15 @@ class TelegramAdminPage {
             }
             
             this.showStatus('Настройки оформления сохранены', 'success');
+            if (window.telegramWebApp) {
+                window.telegramWebApp.showNotification('Настройки оформления сохранены');
+                window.telegramWebApp.hapticFeedback('success');
+            }
+            
+            // Reload checkout page settings if it's open
+            if (window.telegramCheckout) {
+                window.telegramCheckout.loadSettings();
+            }
         } catch (error) {
             console.error('Error saving checkout settings:', error);
             this.showStatus('Ошибка при сохранении настроек', 'error');
