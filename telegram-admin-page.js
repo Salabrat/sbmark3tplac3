@@ -431,7 +431,8 @@ class TelegramAdminPage {
         this.loadDesignSettings();
         
         // Загружаем настройки оформления
-        this.loadCheckoutSettings();
+        // Закомментировано, чтобы не перезаписывать введенные пользователем данные
+        // this.loadCheckoutSettings();
     }
     
     // Вспомогательная функция для fetch с таймаутом
@@ -763,9 +764,10 @@ class TelegramAdminPage {
         }
         
         // Загружаем настройки оформления при переключении на режим оформления
-        if (mode === 'checkout') {
-            this.loadCheckoutSettings();
-        }
+        // Закомментировано, чтобы не перезаписывать введенные пользователем данные
+        // if (mode === 'checkout') {
+        //     this.loadCheckoutSettings();
+        // }
         
         // Загружаем настройки рулетки при переключении на режим рулетки
         if (mode === 'roulette') {
