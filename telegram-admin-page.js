@@ -630,8 +630,34 @@ class TelegramAdminPage {
                 if (pickupAddressInput) {
                     pickupAddressInput.value = '';
                     pickupAddressInput.focus();
+                    fetch('/api/debug-log', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            message: 'Clear button clicked',
+                            data: { cleared: true }
+                        })
+                    }).catch(() => {});
+                } else {
+                    fetch('/api/debug-log', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            message: 'Clear button error',
+                            data: { error: 'pickupAddressInput not found' }
+                        })
+                    }).catch(() => {});
                 }
             });
+        } else {
+            fetch('/api/debug-log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: 'Clear button not found',
+                    data: { error: 'clearAddressBtn not found' }
+                })
+            }).catch(() => {});
         }
         
         // Track textarea changes for debugging
