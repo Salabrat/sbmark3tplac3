@@ -391,10 +391,7 @@ class TelegramAdminPage {
                     <form class="tg-admin-form" id="tgAdminCheckoutForm" data-form="checkout" style="display: none;">
                         <div class="tg-admin-field">
                             <label for="tgCheckoutPickupAddress">Адрес самовывоза</label>
-                            <div style="display: flex; gap: 8px;">
-                                <textarea id="tgCheckoutPickupAddress" rows="3" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101" autocomplete="off" spellcheck="false" style="flex: 1;"></textarea>
-                                <button type="button" id="tgClearAddressBtn" style="padding: 8px 12px; background: #ff4444; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 12px;">✕</button>
-                            </div>
+                            <textarea id="tgCheckoutPickupAddress" rows="3" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101"></textarea>
                             <small style="color: #999; font-size: 11px; margin-top: 4px; display: block;">Этот адрес будет показан на странице оформления заказа</small>
                         </div>
                         <div class="tg-admin-field">
@@ -622,59 +619,6 @@ class TelegramAdminPage {
         const checkoutSubmitBtn = document.getElementById('tgAdminCheckoutSubmitBtn');
         if (checkoutSubmitBtn) checkoutSubmitBtn.addEventListener('click', () => this.handleCheckoutSubmit());
         
-        // Clear address button
-        const clearAddressBtn = document.getElementById('tgClearAddressBtn');
-        if (clearAddressBtn) {
-            clearAddressBtn.addEventListener('click', () => {
-                const pickupAddressInput = document.getElementById('tgCheckoutPickupAddress');
-                if (pickupAddressInput) {
-                    pickupAddressInput.value = '';
-                    pickupAddressInput.focus();
-                    fetch('/api/debug-log', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            message: 'Clear button clicked',
-                            data: { cleared: true }
-                        })
-                    }).catch(() => {});
-                } else {
-                    fetch('/api/debug-log', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            message: 'Clear button error',
-                            data: { error: 'pickupAddressInput not found' }
-                        })
-                    }).catch(() => {});
-                }
-            });
-        } else {
-            fetch('/api/debug-log', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    message: 'Clear button not found',
-                    data: { error: 'clearAddressBtn not found' }
-                })
-            }).catch(() => {});
-        }
-        
-        // Track textarea changes for debugging
-        const pickupAddressInput = document.getElementById('tgCheckoutPickupAddress');
-        if (pickupAddressInput) {
-            pickupAddressInput.addEventListener('input', () => {
-                fetch('/api/debug-log', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        message: 'Textarea input event',
-                        data: { value: pickupAddressInput.value }
-                    })
-                }).catch(() => {});
-            });
-        }
-        
         if (logoImageRemoveBtn) logoImageRemoveBtn.addEventListener('click', () => this.removeLogoImage());
         if (loadingScreenImageRemoveBtn) loadingScreenImageRemoveBtn.addEventListener('click', () => this.removeLoadingScreenImage());
         if (backgroundImageRemoveBtn) backgroundImageRemoveBtn.addEventListener('click', () => this.removeBackgroundImage());
@@ -820,11 +764,6 @@ class TelegramAdminPage {
         
         // Загружаем настройки оформления при переключении на режим оформления
         if (mode === 'checkout') {
-            // Clear the address field first to allow fresh input
-            const pickupAddressInput = document.getElementById('tgCheckoutPickupAddress');
-            if (pickupAddressInput) {
-                pickupAddressInput.value = '';
-            }
             this.loadCheckoutSettings();
         }
         
@@ -2642,8 +2581,9 @@ class TelegramAdminPage {
             const maxLinkInput = document.getElementById('tgCheckoutMaxLink');
             const vkLinkInput = document.getElementById('tgCheckoutVkLink');
             
-            // Don't auto-load pickup address - let user enter fresh value
-            // Only load the links
+            if (pickupAddressInput) {
+                pickupAddressInput.value = settings.pickupAddress || '';
+            }
             if (telegramLinkInput) {
                 telegramLinkInput.value = settings.telegramLink || '';
             }
@@ -2659,25 +2599,10 @@ class TelegramAdminPage {
     }
 
     async handleCheckoutSubmit() {
-        const pickupAddressInput = document.getElementById('tgCheckoutPickupAddress');
-        const telegramLinkInput = document.getElementById('tgCheckoutTelegramLink');
-        const maxLinkInput = document.getElementById('tgCheckoutMaxLink');
-        const vkLinkInput = document.getElementById('tgCheckoutVkLink');
-        
-        const pickupAddress = pickupAddressInput ? pickupAddressInput.value.trim() : '';
-        const telegramLink = telegramLinkInput ? telegramLinkInput.value.trim() : '';
-        const maxLink = maxLinkInput ? maxLinkInput.value.trim() : '';
-        const vkLink = vkLinkInput ? vkLinkInput.value.trim() : '';
-        
-        // Log to server via API for debugging
-        fetch('/api/debug-log', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                message: 'Form values before save',
-                data: { pickupAddress, telegramLink, maxLink, vkLink }
-            })
-        }).catch(() => {});
+        const pickupAddress = document.getElementById('tgCheckoutPickupAddress').value.trim();
+        const telegramLink = document.getElementById('tgCheckoutTelegramLink').value.trim();
+        const maxLink = document.getElementById('tgCheckoutMaxLink').value.trim();
+        const vkLink = document.getElementById('tgCheckoutVkLink').value.trim();
         
         if (!telegramLink) {
             this.showStatus('Ссылка Telegram обязательна', 'error');
