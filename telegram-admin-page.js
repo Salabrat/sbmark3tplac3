@@ -391,7 +391,7 @@ class TelegramAdminPage {
                     <form class="tg-admin-form" id="tgAdminCheckoutForm" data-form="checkout" style="display: none;">
                         <div class="tg-admin-field">
                             <label for="tgCheckoutPickupAddress">Адрес самовывоза</label>
-                            <textarea id="tgCheckoutPickupAddress" rows="3" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101"></textarea>
+                            <input type="text" id="tgCheckoutPickupAddress" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101" />
                             <small style="color: #999; font-size: 11px; margin-top: 4px; display: block;">Этот адрес будет показан на странице оформления заказа</small>
                         </div>
                         <div class="tg-admin-field">
