@@ -2599,10 +2599,25 @@ class TelegramAdminPage {
     }
 
     async handleCheckoutSubmit() {
-        const pickupAddress = document.getElementById('tgCheckoutPickupAddress').value.trim();
-        const telegramLink = document.getElementById('tgCheckoutTelegramLink').value.trim();
-        const maxLink = document.getElementById('tgCheckoutMaxLink').value.trim();
-        const vkLink = document.getElementById('tgCheckoutVkLink').value.trim();
+        const pickupAddressInput = document.getElementById('tgCheckoutPickupAddress');
+        const telegramLinkInput = document.getElementById('tgCheckoutTelegramLink');
+        const maxLinkInput = document.getElementById('tgCheckoutMaxLink');
+        const vkLinkInput = document.getElementById('tgCheckoutVkLink');
+        
+        const pickupAddress = pickupAddressInput ? pickupAddressInput.value.trim() : '';
+        const telegramLink = telegramLinkInput ? telegramLinkInput.value.trim() : '';
+        const maxLink = maxLinkInput ? maxLinkInput.value.trim() : '';
+        const vkLink = vkLinkInput ? vkLinkInput.value.trim() : '';
+        
+        // Log to server via API for debugging
+        fetch('/api/debug-log', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: 'Form values before save',
+                data: { pickupAddress, telegramLink, maxLink, vkLink }
+            })
+        }).catch(() => {});
         
         if (!telegramLink) {
             this.showStatus('Ссылка Telegram обязательна', 'error');

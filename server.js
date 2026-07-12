@@ -1743,6 +1743,17 @@ app.get('/api/settings/checkout', (req, res) => {
     }
 });
 
+// Debug log endpoint (for debugging client-side issues)
+app.post('/api/debug-log', (req, res) => {
+    try {
+        console.log('🐛 DEBUG LOG:', req.body);
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error logging debug:', error);
+        res.status(500).json({ error: 'Failed to log debug' });
+    }
+});
+
 // Update checkout settings (requires admin)
 app.post('/api/settings/checkout', requireAdmin, (req, res) => {
     try {
