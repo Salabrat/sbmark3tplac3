@@ -2604,8 +2604,6 @@ class TelegramAdminPage {
         const maxLink = document.getElementById('tgCheckoutMaxLink').value.trim();
         const vkLink = document.getElementById('tgCheckoutVkLink').value.trim();
         
-        console.log('📝 Form values:', { pickupAddress, telegramLink, maxLink, vkLink });
-        
         if (!telegramLink) {
             this.showStatus('Ссылка Telegram обязательна', 'error');
             return;
@@ -2618,8 +2616,6 @@ class TelegramAdminPage {
             vkLink
         };
         
-        console.log('📤 Sending settings:', settings);
-        
         try {
             const response = await fetch('/api/settings/checkout', {
                 method: 'POST',
@@ -2631,14 +2627,9 @@ class TelegramAdminPage {
                 body: JSON.stringify(settings)
             });
             
-            console.log('📥 Response status:', response.status);
-            
             if (!response.ok) {
                 throw new Error('Failed to save checkout settings');
             }
-            
-            const result = await response.json();
-            console.log('✅ Save result:', result);
             
             this.showStatus('Настройки оформления сохранены', 'success');
             if (window.telegramWebApp) {
@@ -2651,7 +2642,7 @@ class TelegramAdminPage {
                 window.telegramCheckout.loadSettings();
             }
         } catch (error) {
-            console.error('❌ Error saving checkout settings:', error);
+            console.error('Error saving checkout settings:', error);
             this.showStatus('Ошибка при сохранении настроек', 'error');
         }
     }

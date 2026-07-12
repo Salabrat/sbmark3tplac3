@@ -76,51 +76,35 @@ class TelegramCheckout {
 
     async loadSettings() {
         try {
-            console.log('📖 Loading checkout settings...');
             const response = await fetch('/api/settings/checkout');
             const settings = await response.json();
-            console.log('✅ Loaded checkout settings:', settings);
             
             // Update pickup address
             const addressElement = document.getElementById('tgCheckoutPickupAddress');
-            console.log('📍 Address element found:', !!addressElement);
             if (addressElement) {
                 if (settings.pickupAddress) {
                     addressElement.textContent = settings.pickupAddress;
                     addressElement.style.display = 'block';
-                    console.log('📍 Address set to:', settings.pickupAddress);
                 } else {
                     addressElement.style.display = 'none';
-                    console.log('📍 Address hidden (empty)');
                 }
-            } else {
-                console.error('❌ Address element not found!');
             }
             
             // Show/hide contact buttons based on settings
             const maxBtn = document.getElementById('tgCheckoutMaxBtn');
             const vkBtn = document.getElementById('tgCheckoutVkBtn');
             
-            console.log('🔘 MAX button found:', !!maxBtn);
-            console.log('🔘 VK button found:', !!vkBtn);
-            
             if (maxBtn) {
                 maxBtn.style.display = settings.maxLink ? 'flex' : 'none';
-                console.log('🔘 MAX button display:', settings.maxLink ? 'flex' : 'none', '(link:', settings.maxLink + ')');
-            } else {
-                console.error('❌ MAX button not found!');
             }
             
             if (vkBtn) {
                 vkBtn.style.display = settings.vkLink ? 'flex' : 'none';
-                console.log('🔘 VK button display:', settings.vkLink ? 'flex' : 'none', '(link:', settings.vkLink + ')');
-            } else {
-                console.error('❌ VK button not found!');
             }
             
             this.settings = settings;
         } catch (error) {
-            console.error('❌ Error loading settings:', error);
+            console.error('Error loading settings:', error);
             // Fallback to defaults
             const addressElement = document.getElementById('tgCheckoutPickupAddress');
             if (addressElement) {
