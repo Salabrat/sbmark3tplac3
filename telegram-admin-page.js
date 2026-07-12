@@ -2637,6 +2637,9 @@ class TelegramAdminPage {
                 window.telegramWebApp.hapticFeedback('success');
             }
             
+            // Reload form with saved values
+            this.loadCheckoutSettings();
+            
             // Reload checkout page settings if it's open
             if (window.telegramCheckout) {
                 window.telegramCheckout.loadSettings();
