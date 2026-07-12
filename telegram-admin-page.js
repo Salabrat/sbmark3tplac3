@@ -391,7 +391,7 @@ class TelegramAdminPage {
                     <form class="tg-admin-form" id="tgAdminCheckoutForm" data-form="checkout" style="display: none;">
                         <div class="tg-admin-field">
                             <label for="tgCheckoutPickupAddress">Адрес самовывоза</label>
-                            <textarea id="tgCheckoutPickupAddress" rows="3" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101"></textarea>
+                            <textarea id="tgCheckoutPickupAddress" rows="3" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101" autocomplete="off"></textarea>
                             <small style="color: #999; font-size: 11px; margin-top: 4px; display: block;">Этот адрес будет показан на странице оформления заказа</small>
                         </div>
                         <div class="tg-admin-field">
@@ -2581,16 +2581,17 @@ class TelegramAdminPage {
             const maxLinkInput = document.getElementById('tgCheckoutMaxLink');
             const vkLinkInput = document.getElementById('tgCheckoutVkLink');
             
-            if (pickupAddressInput) {
+            // Only load values if fields are empty (preserve user edits)
+            if (pickupAddressInput && !pickupAddressInput.value) {
                 pickupAddressInput.value = settings.pickupAddress || '';
             }
-            if (telegramLinkInput) {
+            if (telegramLinkInput && !telegramLinkInput.value) {
                 telegramLinkInput.value = settings.telegramLink || '';
             }
-            if (maxLinkInput) {
+            if (maxLinkInput && !maxLinkInput.value) {
                 maxLinkInput.value = settings.maxLink || '';
             }
-            if (vkLinkInput) {
+            if (vkLinkInput && !vkLinkInput.value) {
                 vkLinkInput.value = settings.vkLink || '';
             }
         } catch (error) {
@@ -2651,9 +2652,6 @@ class TelegramAdminPage {
                 window.telegramWebApp.showNotification('Настройки оформления сохранены');
                 window.telegramWebApp.hapticFeedback('success');
             }
-            
-            // Reload form with saved values
-            this.loadCheckoutSettings();
             
             // Reload checkout page settings if it's open
             if (window.telegramCheckout) {
