@@ -11,12 +11,14 @@ class MaxWebApp {
         if (window.Max && window.Max.WebApp) {
             this.max = window.Max.WebApp;
             this.isMax = true;
+            this.isTelegram = true; // Set isTelegram for compatibility with existing code
             console.log('MAX WebApp detected, initializing...');
             this.setupMaxApp();
         } else if (window.Telegram && window.Telegram.WebApp) {
             // Fallback to Telegram if MAX not available
             this.max = window.Telegram.WebApp;
             this.isMax = true;
+            this.isTelegram = true; // Set isTelegram for compatibility with existing code
             console.log('Telegram WebApp detected (fallback for MAX compatibility)');
             this.setupMaxApp();
         } else {

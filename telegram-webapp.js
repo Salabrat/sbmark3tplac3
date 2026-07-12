@@ -291,6 +291,8 @@ class TelegramWebApp {
     }
 }
 
-// Initialize Telegram Web App
-const telegramWebApp = new TelegramWebApp();
-window.telegramWebApp = telegramWebApp;
+// Initialize Telegram Web App (only if not already set by MAX)
+if (!window.telegramWebApp) {
+    const telegramWebApp = new TelegramWebApp();
+    window.telegramWebApp = telegramWebApp;
+}
