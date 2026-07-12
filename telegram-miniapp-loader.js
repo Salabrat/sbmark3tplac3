@@ -400,32 +400,84 @@ class TelegramMiniAppLoader {
             if (blobUrl) rouletteBannerMedia.url = blobUrl;
         }
         const hasMedia = !!(rouletteBannerMedia && rouletteBannerMedia.url);
-        const mediaMarkup = hasMedia
-            ? (rouletteBannerMedia.type === 'video'
-                ? `<video class="tg-roulette-banner-media" src="${rouletteBannerMedia.url}" poster="${(typeof rouletteBannerMedia.url === 'string' && rouletteBannerMedia.url.startsWith('/uploads/')) ? ('/api/video-poster?src=' + encodeURIComponent(rouletteBannerMedia.url)) : ''}" autoplay muted loop playsinline webkit-playsinline x-webkit-airplay="allow" preload="auto"></video>`
-                : `<img class="tg-roulette-banner-media" src="${rouletteBannerMedia.url}" alt="Рулетка" loading="lazy" />`)
-            : `<div class="tg-roulette-banner-fallback"></div>`;
-
+        
         banner.classList.toggle('tg-roulette-banner-has-media', hasMedia);
 
-        banner.innerHTML = `
-            ${mediaMarkup}
-        `;
-        container.appendChild(banner);
-
-        // iOS: explicitly play video after DOM insertion
-        var bannerVideo = banner.querySelector('video');
-        if (bannerVideo) {
-            if (!bannerVideo.poster && typeof rouletteBannerMedia?.url === 'string' && rouletteBannerMedia.url.startsWith('/uploads/')) {
-                bannerVideo.poster = '/api/video-poster?src=' + encodeURIComponent(rouletteBannerMedia.url);
+        if (hasMedia && rouletteBannerMedia.type === 'video') {
+            const video = document.createElement('video');
+            video.className = 'tg-roulette-banner-media';
+            video.src = rouletteBannerMedia.url;
+            video.style.width = '100%';
+            video.style.height = '100%';
+            video.style.objectFit = 'cover';
+            video.style.display = 'block';
+            
+            // Set poster for uploaded videos
+            if (typeof rouletteBannerMedia.url === 'string' && rouletteBannerMedia.url.startsWith('/uploads/')) {
+                video.poster = '/api/video-poster?src=' + encodeURIComponent(rouletteBannerMedia.url);
             }
-            bannerVideo.muted = true;
-            bannerVideo.playsInline = true;
-            bannerVideo.load();
-            bannerVideo.play().catch(function(){});
-            setTimeout(function() { bannerVideo.play().catch(function(){}); }, 300);
-            if (window._iosVideoFix) window._iosVideoFix.applyToVideo(bannerVideo);
+            
+            // iOS attributes
+            video.setAttribute('autoplay', '');
+            video.setAttribute('loop', '');
+            video.setAttribute('muted', '');
+            video.setAttribute('playsinline', '');
+            video.setAttribute('webkit-playsinline', '');
+            video.setAttribute('preload', 'auto');
+            video.setAttribute('x-webkit-airplay', 'allow');
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.autoplay = true;
+            try { video.disableRemotePlayback = true; } catch (e) {}
+            
+            video.onloadeddata = () => {
+                video.play().catch(e => console.warn('Roulette video autoplay prevented:', e));
+            };
+            
+            // iOS error handling with fallback
+            video.onerror = () => {
+                console.error('Roulette video failed to load:', rouletteBannerMedia.url);
+                const fallbackImg = document.createElement('img');
+                fallbackImg.className = 'tg-roulette-banner-media';
+                fallbackImg.src = rouletteBannerMedia.url;
+                fallbackImg.alt = 'Рулетка';
+                fallbackImg.style.width = '100%';
+                fallbackImg.style.height = '100%';
+                fallbackImg.style.objectFit = 'cover';
+                fallbackImg.style.display = 'block';
+                fallbackImg.onerror = () => {
+                    console.error('Roulette image fallback also failed');
+                    const fallbackDiv = document.createElement('div');
+                    fallbackDiv.className = 'tg-roulette-banner-fallback';
+                    banner.innerHTML = '';
+                    banner.appendChild(fallbackDiv);
+                };
+                banner.innerHTML = '';
+                banner.appendChild(fallbackImg);
+            };
+            
+            banner.appendChild(video);
+            
+            // iOS: explicitly play video after DOM insertion
+            video.load();
+            video.play().catch(function(){});
+            setTimeout(function() { video.play().catch(function(){}); }, 300);
+            if (window._iosVideoFix) window._iosVideoFix.applyToVideo(video);
+        } else if (hasMedia && rouletteBannerMedia.type === 'image') {
+            const img = document.createElement('img');
+            img.className = 'tg-roulette-banner-media';
+            img.src = rouletteBannerMedia.url;
+            img.alt = 'Рулетка';
+            img.loading = 'lazy';
+            banner.appendChild(img);
+        } else {
+            const fallbackDiv = document.createElement('div');
+            fallbackDiv.className = 'tg-roulette-banner-fallback';
+            banner.appendChild(fallbackDiv);
         }
+        
+        container.appendChild(banner);
 
         banner.addEventListener('click', (e) => {
             e.preventDefault();
