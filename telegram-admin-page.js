@@ -820,6 +820,11 @@ class TelegramAdminPage {
         
         // Загружаем настройки оформления при переключении на режим оформления
         if (mode === 'checkout') {
+            // Clear the address field first to allow fresh input
+            const pickupAddressInput = document.getElementById('tgCheckoutPickupAddress');
+            if (pickupAddressInput) {
+                pickupAddressInput.value = '';
+            }
             this.loadCheckoutSettings();
         }
         
@@ -2637,10 +2642,8 @@ class TelegramAdminPage {
             const maxLinkInput = document.getElementById('tgCheckoutMaxLink');
             const vkLinkInput = document.getElementById('tgCheckoutVkLink');
             
-            // Always load current values
-            if (pickupAddressInput) {
-                pickupAddressInput.value = settings.pickupAddress || '';
-            }
+            // Don't auto-load pickup address - let user enter fresh value
+            // Only load the links
             if (telegramLinkInput) {
                 telegramLinkInput.value = settings.telegramLink || '';
             }
