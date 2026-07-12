@@ -391,7 +391,10 @@ class TelegramAdminPage {
                     <form class="tg-admin-form" id="tgAdminCheckoutForm" data-form="checkout" style="display: none;">
                         <div class="tg-admin-field">
                             <label for="tgCheckoutPickupAddress">Адрес самовывоза</label>
-                            <input type="text" id="tgCheckoutPickupAddress" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101" />
+                            <div style="display: flex; gap: 8px;">
+                                <input type="text" id="tgCheckoutPickupAddress" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101" readonly style="flex: 1; background: #f5f5f5;" />
+                                <button type="button" id="tgEditAddressBtn" style="padding: 8px 16px; background: #0088cc; color: white; border: none; border-radius: 8px; cursor: pointer;">Изменить</button>
+                            </div>
                             <small style="color: #999; font-size: 11px; margin-top: 4px; display: block;">Этот адрес будет показан на странице оформления заказа</small>
                         </div>
                         <div class="tg-admin-field">
@@ -618,6 +621,18 @@ class TelegramAdminPage {
         // Checkout event listeners
         const checkoutSubmitBtn = document.getElementById('tgAdminCheckoutSubmitBtn');
         if (checkoutSubmitBtn) checkoutSubmitBtn.addEventListener('click', () => this.handleCheckoutSubmit());
+        
+        // Edit address button - use prompt
+        const editAddressBtn = document.getElementById('tgEditAddressBtn');
+        if (editAddressBtn) {
+            editAddressBtn.addEventListener('click', () => {
+                const currentAddress = document.getElementById('tgCheckoutPickupAddress').value;
+                const newAddress = prompt('Введите адрес самовывоза:', currentAddress);
+                if (newAddress !== null) {
+                    document.getElementById('tgCheckoutPickupAddress').value = newAddress;
+                }
+            });
+        }
         
         if (logoImageRemoveBtn) logoImageRemoveBtn.addEventListener('click', () => this.removeLogoImage());
         if (loadingScreenImageRemoveBtn) loadingScreenImageRemoveBtn.addEventListener('click', () => this.removeLoadingScreenImage());
