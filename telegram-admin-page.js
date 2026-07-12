@@ -391,7 +391,7 @@ class TelegramAdminPage {
                     <form class="tg-admin-form" id="tgAdminCheckoutForm" data-form="checkout" style="display: none;">
                         <div class="tg-admin-field">
                             <label for="tgCheckoutPickupAddress">Адрес самовывоза</label>
-                            <textarea id="tgCheckoutPickupAddress" rows="3" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101" autocomplete="off"></textarea>
+                            <textarea id="tgCheckoutPickupAddress" rows="3" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101" autocomplete="off" spellcheck="false"></textarea>
                             <small style="color: #999; font-size: 11px; margin-top: 4px; display: block;">Этот адрес будет показан на странице оформления заказа</small>
                         </div>
                         <div class="tg-admin-field">
@@ -618,6 +618,21 @@ class TelegramAdminPage {
         // Checkout event listeners
         const checkoutSubmitBtn = document.getElementById('tgAdminCheckoutSubmitBtn');
         if (checkoutSubmitBtn) checkoutSubmitBtn.addEventListener('click', () => this.handleCheckoutSubmit());
+        
+        // Track textarea changes for debugging
+        const pickupAddressInput = document.getElementById('tgCheckoutPickupAddress');
+        if (pickupAddressInput) {
+            pickupAddressInput.addEventListener('input', () => {
+                fetch('/api/debug-log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: 'Textarea input event',
+                        data: { value: pickupAddressInput.value }
+                    })
+                }).catch(() => {});
+            });
+        }
         
         if (logoImageRemoveBtn) logoImageRemoveBtn.addEventListener('click', () => this.removeLogoImage());
         if (loadingScreenImageRemoveBtn) loadingScreenImageRemoveBtn.addEventListener('click', () => this.removeLoadingScreenImage());
