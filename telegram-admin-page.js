@@ -391,7 +391,10 @@ class TelegramAdminPage {
                     <form class="tg-admin-form" id="tgAdminCheckoutForm" data-form="checkout" style="display: none;">
                         <div class="tg-admin-field">
                             <label for="tgCheckoutPickupAddress">Адрес самовывоза</label>
-                            <textarea id="tgCheckoutPickupAddress" rows="3" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101" autocomplete="off" spellcheck="false"></textarea>
+                            <div style="display: flex; gap: 8px;">
+                                <textarea id="tgCheckoutPickupAddress" rows="3" placeholder="Например: г. Москва, ул. Примерная, д. 1, офис 101" autocomplete="off" spellcheck="false" style="flex: 1;"></textarea>
+                                <button type="button" id="tgClearAddressBtn" style="padding: 8px 12px; background: #ff4444; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 12px;">✕</button>
+                            </div>
                             <small style="color: #999; font-size: 11px; margin-top: 4px; display: block;">Этот адрес будет показан на странице оформления заказа</small>
                         </div>
                         <div class="tg-admin-field">
@@ -618,6 +621,18 @@ class TelegramAdminPage {
         // Checkout event listeners
         const checkoutSubmitBtn = document.getElementById('tgAdminCheckoutSubmitBtn');
         if (checkoutSubmitBtn) checkoutSubmitBtn.addEventListener('click', () => this.handleCheckoutSubmit());
+        
+        // Clear address button
+        const clearAddressBtn = document.getElementById('tgClearAddressBtn');
+        if (clearAddressBtn) {
+            clearAddressBtn.addEventListener('click', () => {
+                const pickupAddressInput = document.getElementById('tgCheckoutPickupAddress');
+                if (pickupAddressInput) {
+                    pickupAddressInput.value = '';
+                    pickupAddressInput.focus();
+                }
+            });
+        }
         
         // Track textarea changes for debugging
         const pickupAddressInput = document.getElementById('tgCheckoutPickupAddress');
@@ -2596,17 +2611,17 @@ class TelegramAdminPage {
             const maxLinkInput = document.getElementById('tgCheckoutMaxLink');
             const vkLinkInput = document.getElementById('tgCheckoutVkLink');
             
-            // Only load values if fields are empty (preserve user edits)
-            if (pickupAddressInput && !pickupAddressInput.value) {
+            // Always load current values
+            if (pickupAddressInput) {
                 pickupAddressInput.value = settings.pickupAddress || '';
             }
-            if (telegramLinkInput && !telegramLinkInput.value) {
+            if (telegramLinkInput) {
                 telegramLinkInput.value = settings.telegramLink || '';
             }
-            if (maxLinkInput && !maxLinkInput.value) {
+            if (maxLinkInput) {
                 maxLinkInput.value = settings.maxLink || '';
             }
-            if (vkLinkInput && !vkLinkInput.value) {
+            if (vkLinkInput) {
                 vkLinkInput.value = settings.vkLink || '';
             }
         } catch (error) {
