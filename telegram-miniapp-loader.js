@@ -764,10 +764,12 @@ class TelegramMiniAppLoader {
             video.setAttribute('playsinline', '');
             video.setAttribute('webkit-playsinline', '');
             video.setAttribute('preload', 'auto');
+            video.setAttribute('x-webkit-airplay', 'allow');
             video.muted = true;
             video.loop = true;
             video.playsInline = true;
             video.autoplay = true;
+            try { video.disableRemotePlayback = true; } catch (e) {}
             
             video.onloadedmetadata = () => { video.currentTime = 0; };
             video.onloadeddata = () => {
@@ -777,11 +779,25 @@ class TelegramMiniAppLoader {
                 video.play().catch(e => console.warn('Video autoplay prevented:', e));
             };
             
+            // iOS-specific error handling
             video.onerror = () => {
-                console.error('Error loading video:', url);
-                loader.remove();
+                console.error('Video failed to load:', url);
+                // Fallback: try to load as image if video fails
+                if (loader.setProgress) loader.setProgress(100);
+                hideLoader();
+                const fallbackImg = document.createElement('img');
+                fallbackImg.src = url;
+                fallbackImg.style.width = '100%';
+                fallbackImg.style.height = '100%';
+                fallbackImg.style.objectFit = 'cover';
+                fallbackImg.style.aspectRatio = '16 / 9';
+                fallbackImg.style.display = 'block';
+                fallbackImg.onerror = () => {
+                    console.error('Image fallback also failed for:', url);
+                    placeholder.textContent = 'Видео недоступно';
+                };
                 logoContent.innerHTML = '';
-                logoContent.style.backgroundImage = '';
+                logoContent.appendChild(fallbackImg);
             };
             
             video.onprogress = () => {
