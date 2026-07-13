@@ -19,6 +19,9 @@ const sessions = new Map();
 const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'admin123'; // Change this!
 
+// MAX Bot Token for validation
+const MAX_BOT_TOKEN = 'f9LHodD0cOJoFZB4Aoe4oyAgMW6g4P4ToSKa3FAqRPgoWWLipVoVCVJwhJ4u3yAzbpxwRilAnwRIvv4NsX7H';
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -708,18 +711,21 @@ function requireAdmin(req, res, next) {
         headers: {
             'x-miniapp-user-id': req.headers['x-miniapp-user-id'],
             'x-miniapp-admin-key': req.headers['x-miniapp-admin-key'] ? 'present' : 'missing',
+            'x-miniapp-platform': req.headers['x-miniapp-platform'],
             'authorization': req.headers['authorization'] ? 'present' : 'missing'
         }
     });
     
-    // 1) Mini app (Telegram) — проверка по списку админов
+    // 1) Mini app (Telegram/MAX) — проверка по списку админов
     const miniAppUserId = req.headers['x-miniapp-user-id'];
+    const miniAppPlatform = req.headers['x-miniapp-platform']; // 'telegram' or 'max'
+    
     if (miniAppUserId) {
-        console.log('📱 Checking mini app user:', miniAppUserId);
+        console.log('📱 Checking mini app user:', miniAppUserId, 'platform:', miniAppPlatform);
         const isAdmin = isAdminUser(miniAppUserId);
         console.log('📱 Admin check result:', isAdmin);
         if (isAdmin) {
-            req.admin = { isAdmin: true, source: 'miniapp', userId: miniAppUserId };
+            req.admin = { isAdmin: true, source: 'miniapp', userId: miniAppUserId, platform: miniAppPlatform || 'telegram' };
             console.log('✅ Mini app admin authorized');
             return next();
         }
@@ -731,7 +737,7 @@ function requireAdmin(req, res, next) {
 
     if (miniAppHeader && miniAppHeader === miniAppKey) {
         console.log('✅ Mini app admin key authorized');
-        req.admin = { isAdmin: true, source: 'miniapp-key' };
+        req.admin = { isAdmin: true, source: 'miniapp-key', platform: miniAppPlatform || 'telegram' };
         return next();
     }
 

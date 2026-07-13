@@ -3,13 +3,14 @@ class MaxWebApp {
     constructor() {
         this.max = null;
         this.isMax = false;
+        this.isTelegram = false;
         this.init();
     }
 
     init() {
-        // Check if running in MAX messenger
-        if (window.Max && window.Max.WebApp) {
-            this.max = window.Max.WebApp;
+        // Check if running in MAX messenger (window.WebApp is the real MAX SDK)
+        if (window.WebApp) {
+            this.max = window.WebApp;
             this.isMax = true;
             this.isTelegram = true; // Set isTelegram for compatibility with existing code
             console.log('MAX WebApp detected, initializing...');
@@ -17,8 +18,8 @@ class MaxWebApp {
         } else if (window.Telegram && window.Telegram.WebApp) {
             // Fallback to Telegram if MAX not available
             this.max = window.Telegram.WebApp;
-            this.isMax = true;
-            this.isTelegram = true; // Set isTelegram for compatibility with existing code
+            this.isMax = false;
+            this.isTelegram = true;
             console.log('Telegram WebApp detected (fallback for MAX compatibility)');
             this.setupMaxApp();
         } else {
@@ -31,9 +32,9 @@ class MaxWebApp {
     setupMaxApp() {
         console.log('MAX Web App initialized');
         
-        // Expand app to full height
-        if (this.max.expand) {
-            this.max.expand();
+        // Expand app to full height (MAX doesn't have expand, but we can set viewport)
+        if (this.max.ready) {
+            this.max.ready();
         }
         
         // Set theme colors based on MAX theme
@@ -50,7 +51,7 @@ class MaxWebApp {
         // Setup back button
         this.setupBackButton();
         
-        // Listen for theme changes
+        // Listen for theme changes (MAX uses different event names)
         if (this.max.onEvent) {
             this.max.onEvent('themeChanged', () => {
                 this.applyTheme();
@@ -67,10 +68,25 @@ class MaxWebApp {
 
         this.applyUserAvatarToProfileNav();
         
-        // Set initial state
-        if (this.max.ready) {
-            this.max.ready();
-        }
+        // Override fetch to add platform header for MAX
+        this.setupFetchInterceptor();
+    }
+    
+    setupFetchInterceptor() {
+        if (!this.isMax) return;
+        
+        const originalFetch = window.fetch;
+        window.fetch = (...args) => {
+            const [url, options = {}] = args;
+            const headers = options.headers || {};
+            
+            // Add platform header for MAX requests
+            if (this.isMax) {
+                headers['X-MiniApp-Platform'] = 'max';
+            }
+            
+            return originalFetch(url, { ...options, headers });
+        };
     }
 
     applyTheme() {
@@ -264,10 +280,30 @@ class MaxWebApp {
         }, 2000);
     }
 
-    // Get user data from MAX
+    // Get user data from MAX or Telegram
     getUserData() {
-        if (!this.isMax) return null;
-        return this.max.initDataUnsafe?.user || null;
+        if (!this.isMax && !this.isTelegram) return null;
+        
+        // MAX uses window.WebApp.initDataUnsafe.user
+        if (this.isMax && this.max && this.max.initDataUnsafe && this.max.initDataUnsafe.user) {
+            const maxUser = this.max.initDataUnsafe.user;
+            // Convert MAX user format to Telegram format for compatibility
+            return {
+                id: maxUser.id,
+                first_name: maxUser.first_name,
+                last_name: maxUser.last_name,
+                username: maxUser.username,
+                language_code: maxUser.language_code,
+                photo_url: maxUser.photo_url
+            };
+        }
+        
+        // Telegram uses initDataUnsafe.user
+        if (this.isTelegram && this.max && this.max.initDataUnsafe && this.max.initDataUnsafe.user) {
+            return this.max.initDataUnsafe.user;
+        }
+        
+        return null;
     }
 
     // Haptic feedback
