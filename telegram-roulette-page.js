@@ -338,16 +338,26 @@ class TelegramRoulettePage {
             const winnerSlot = this.slots.find(s => s.id === winner.id) || winner;
             this.stripItems[winnerIndex] = winnerSlot;
 
-            // Re-render the item at winnerIndex
+            // Re-render the ENTIRE strip to ensure winner is at the correct position
+            const renderItems = (items, baseIndexOffset = 0) => items.map((slot, idx) => `
+                <div class="tg-roulette-item rarity-${slot.rarity || 'common'}" data-index="${baseIndexOffset + idx}">
+                    <div class="tg-roulette-item-inner">
+                        ${slot.image
+                            ? `<img src="${slot.image}" alt="${this.escapeHtml(slot.name)}" class="tg-roulette-item-img" loading="lazy">`
+                            : `<div class="tg-roulette-item-placeholder">${this.escapeHtml(slot.name.charAt(0))}</div>`
+                        }
+                    </div>
+                    <span class="tg-roulette-item-name">${this.escapeHtml(slot.name)}</span>
+                </div>
+            `).join('');
+
+            // Duplicate for seamless idle scrolling
+            const doubled = this.stripItems.concat(this.stripItems);
+            strip.innerHTML = renderItems(doubled);
+            strip.style.width = (doubled.length * this.ITEM_WIDTH) + 'px';
+
+            // Get the updated item elements
             const itemEls = strip.querySelectorAll('.tg-roulette-item');
-            if (itemEls[winnerIndex]) {
-                const el = itemEls[winnerIndex];
-                el.className = `tg-roulette-item rarity-${winnerSlot.rarity || 'common'}`;
-                el.querySelector('.tg-roulette-item-inner').innerHTML = winnerSlot.image
-                    ? `<img src="${winnerSlot.image}" alt="${this.escapeHtml(winnerSlot.name)}" class="tg-roulette-item-img">`
-                    : `<div class="tg-roulette-item-placeholder">${this.escapeHtml(winnerSlot.name.charAt(0))}</div>`;
-                el.querySelector('.tg-roulette-item-name').textContent = winnerSlot.name;
-            }
 
             // Calculate offset to center the winner item in the viewport
             const viewport = strip.parentElement;
