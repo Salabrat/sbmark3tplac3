@@ -3,21 +3,46 @@ class TelegramWebApp {
     constructor() {
         this.tg = null;
         this.isTelegram = false;
+        this._initialized = false;
+        this._pendingInit = null;
         this.init();
     }
 
     init() {
-        // Check if running in Telegram
-        if (window.Telegram && window.Telegram.WebApp) {
-            this.tg = window.Telegram.WebApp;
-            this.isTelegram = true;
-            console.log('Telegram WebApp detected, initializing...');
-            this.setupTelegramApp();
-        } else {
-            // Not in Telegram, use regular web version
-            console.log('Running in regular browser mode');
-            this.setupRegularMode();
+        // If already initializing, wait for it
+        if (this._pendingInit) {
+            return this._pendingInit;
         }
+        
+        this._pendingInit = (async () => {
+            // Wait for Telegram SDK to load (up to 2 seconds)
+            let attempts = 0;
+            while (!window.Telegram?.WebApp && attempts < 20) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                attempts++;
+            }
+            
+            console.log('Telegram SDK loading attempts:', attempts);
+            console.log('window.Telegram:', window.Telegram);
+            console.log('window.Telegram?.WebApp:', window.Telegram?.WebApp);
+            
+            // Check if running in Telegram
+            if (window.Telegram && window.Telegram.WebApp) {
+                this.tg = window.Telegram.WebApp;
+                this.isTelegram = true;
+                console.log('Telegram WebApp detected, initializing...');
+                this.setupTelegramApp();
+            } else {
+                // Not in Telegram, use regular web version
+                console.log('Running in regular browser mode');
+                this.setupRegularMode();
+            }
+            
+            this._initialized = true;
+            this._pendingInit = null;
+        })();
+        
+        return this._pendingInit;
     }
 
     setupTelegramApp() {
@@ -239,7 +264,12 @@ class TelegramWebApp {
     }
 
     // Get user data from Telegram
-    getUserData() {
+    async getUserData() {
+        // Wait for initialization to complete
+        if (this._pendingInit) {
+            await this._pendingInit;
+        }
+        
         if (!this.isTelegram) return null;
         return this.tg.initDataUnsafe?.user || null;
     }
