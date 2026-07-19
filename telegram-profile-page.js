@@ -20,6 +20,25 @@ class TelegramProfilePage {
     }
 
     async loadUserData() {
+        // Wait for telegramWebApp to be initialized
+        if (!window.telegramWebApp) {
+            console.log('Profile init: waiting for telegramWebApp...');
+            await new Promise(resolve => {
+                const checkInterval = setInterval(() => {
+                    if (window.telegramWebApp) {
+                        clearInterval(checkInterval);
+                        resolve();
+                    }
+                }, 100);
+            });
+        }
+        
+        // Wait for telegramWebApp initialization to complete
+        if (window.telegramWebApp._pendingInit) {
+            console.log('Profile init: waiting for telegramWebApp initialization...');
+            await window.telegramWebApp._pendingInit;
+        }
+        
         // Get Telegram user data if available
         this.user = window.telegramWebApp ? await window.telegramWebApp.getUserData() : null;
         console.log('Profile init: user data', this.user);
