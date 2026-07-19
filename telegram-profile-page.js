@@ -9,8 +9,9 @@ class TelegramProfilePage {
 
     async init() {
         // Get Telegram user data if available
-        this.user = window.telegramWebApp ? window.telegramWebApp.getUserData() : null;
-        const userId = this.user ? String(this.user.id) : null;
+        this.user = window.telegramWebApp ? await window.telegramWebApp.getUserData() : null;
+        console.log('Profile init: user data', this.user);
+        const userId = this.user && this.user.id ? String(this.user.id) : null;
         
         // Check if user is admin via API (same as in telegram-admin-page.js)
         try {
@@ -44,6 +45,7 @@ class TelegramProfilePage {
         // Создаем страницу сразу, без ожидания админки
         this.createPage();
         this.setupEventListeners();
+        // Рендерим данные пользователя после их получения
         this.renderUserInfo();
 
         // Listen for roulette wins to update discount in real-time
