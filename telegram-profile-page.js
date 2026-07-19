@@ -4,66 +4,58 @@ class TelegramProfilePage {
         this.page = null;
         this.user = null;
         this.isAdmin = false;
-        this._initialized = false;
-        this._pendingInit = null;
         this.init();
     }
 
     init() {
-        // If already initializing, wait for it
-        if (this._pendingInit) {
-            return this._pendingInit;
-        }
+        // Создаем страницу сразу
+        this.createPage();
+        this.setupEventListeners();
         
-        this._pendingInit = (async () => {
-            // Get Telegram user data if available
-            this.user = window.telegramWebApp ? await window.telegramWebApp.getUserData() : null;
-            console.log('Profile init: user data', this.user);
-            const userId = this.user && this.user.id ? String(this.user.id) : null;
+        // Загружаем данные пользователя асинхронно
+        this.loadUserData();
         
-            // Check if user is admin via API (same as in telegram-admin-page.js)
-            try {
-                const response = await fetch('/api/admin-users', {
-                    headers: {
-                        'X-MiniApp-User-Id': userId || '',
-                        'X-MiniApp-Admin-Key': 'salik-miniapp-admin-8222800886'
-                    }
-                });
-                if (response.ok) {
-                    const admins = await response.json();
-                    this.isAdmin = admins.some(admin => 
-                        admin.type === 'telegram' && String(admin.id) === String(userId)
-                    );
-                    console.log('✅ Profile admin check:', { 
-                        isAdmin: this.isAdmin, 
-                        userId: userId,
-                        userIdType: typeof userId,
-                        admins: admins.map(a => ({ id: a.id, idType: typeof a.id, type: a.type }))
-                    });
-                } else {
-                    // Fallback to hardcoded admin check
-                    this.isAdmin = String(userId) === '8222800886';
+        // Listen for roulette wins to update discount in real-time
+        window.addEventListener('tgRouletteWin', () => this.refreshDiscount());
+    }
+
+    async loadUserData() {
+        // Get Telegram user data if available
+        this.user = window.telegramWebApp ? await window.telegramWebApp.getUserData() : null;
+        console.log('Profile init: user data', this.user);
+        const userId = this.user && this.user.id ? String(this.user.id) : null;
+        
+        // Check if user is admin via API (same as in telegram-admin-page.js)
+        try {
+            const response = await fetch('/api/admin-users', {
+                headers: {
+                    'X-MiniApp-User-Id': userId || '',
+                    'X-MiniApp-Admin-Key': 'salik-miniapp-admin-8222800886'
                 }
-            } catch (error) {
-                console.error('Error checking admin status in profile:', error);
+            });
+            if (response.ok) {
+                const admins = await response.json();
+                this.isAdmin = admins.some(admin => 
+                    admin.type === 'telegram' && String(admin.id) === String(userId)
+                );
+                console.log('✅ Profile admin check:', { 
+                    isAdmin: this.isAdmin, 
+                    userId: userId,
+                    userIdType: typeof userId,
+                    admins: admins.map(a => ({ id: a.id, idType: typeof a.id, type: a.type }))
+                });
+            } else {
                 // Fallback to hardcoded admin check
                 this.isAdmin = String(userId) === '8222800886';
             }
-            
-            // Создаем страницу сразу, без ожидания админки
-            this.createPage();
-            this.setupEventListeners();
-            // Рендерим данные пользователя после их получения
-            this.renderUserInfo();
-
-            // Listen for roulette wins to update discount in real-time
-            window.addEventListener('tgRouletteWin', () => this.refreshDiscount());
-            
-            this._initialized = true;
-            this._pendingInit = null;
-        })();
+        } catch (error) {
+            console.error('Error checking admin status in profile:', error);
+            // Fallback to hardcoded admin check
+            this.isAdmin = String(userId) === '8222800886';
+        }
         
-        return this._pendingInit;
+        // Рендерим данные пользователя после их получения
+        this.renderUserInfo();
     }
 
     createPage() {
