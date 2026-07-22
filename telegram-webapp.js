@@ -264,12 +264,7 @@ class TelegramWebApp {
     }
 
     // Get user data from Telegram
-    async getUserData() {
-        // Wait for initialization to complete
-        if (this._pendingInit) {
-            await this._pendingInit;
-        }
-        
+    getUserData() {
         if (!this.isTelegram) return null;
         return this.tg.initDataUnsafe?.user || null;
     }
