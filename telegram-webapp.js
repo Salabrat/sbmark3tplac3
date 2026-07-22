@@ -115,7 +115,9 @@ class TelegramWebApp {
         if (!this.isTelegram) return;
 
         const user = this.getUserData();
+        console.log('applyUserAvatarToProfileNav: user data', user);
         const photoUrl = user && user.photo_url;
+        console.log('applyUserAvatarToProfileNav: photoUrl', photoUrl);
         if (!photoUrl) return;
 
         const profileNavItem = document.querySelector('.tg-bottom-nav .tg-nav-item[href="#profile"]');
