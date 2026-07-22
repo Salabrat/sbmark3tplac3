@@ -621,6 +621,11 @@ class TelegramProfilePage {
         this.page.style.display = 'block';
         this.renderUserInfo();
         this.refreshDiscount();
+        
+        // Apply avatar to menu bar when profile is shown
+        if (window.telegramWebApp) {
+            window.telegramWebApp.applyUserAvatarToProfileNav();
+        }
 
         if (window.telegramWebApp && window.telegramWebApp.isTelegram) {
             window.telegramWebApp.tg.BackButton.onClick(() => {
