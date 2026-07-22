@@ -76,7 +76,8 @@ class TelegramWebApp {
         // Setup header
         this.setupHeader();
 
-        this.applyUserAvatarToProfileNav();
+        // Apply avatar after DOM is ready
+        setTimeout(() => this.applyUserAvatarToProfileNav(), 100);
         
         // Set initial state
         this.tg.ready();
