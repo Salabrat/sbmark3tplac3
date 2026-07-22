@@ -118,10 +118,17 @@ class TelegramWebApp {
         console.log('applyUserAvatarToProfileNav: user data', user);
         const photoUrl = user && user.photo_url;
         console.log('applyUserAvatarToProfileNav: photoUrl', photoUrl);
-        if (!photoUrl) return;
+        if (!photoUrl) {
+            console.log('applyUserAvatarToProfileNav: no photoUrl, skipping');
+            return;
+        }
 
         const profileNavItem = document.querySelector('.tg-bottom-nav .tg-nav-item[href="#profile"]');
-        if (!profileNavItem) return;
+        if (!profileNavItem) {
+            console.log('applyUserAvatarToProfileNav: profileNavItem not found');
+            return;
+        }
+        console.log('applyUserAvatarToProfileNav: profileNavItem found', profileNavItem);
 
         const svg = profileNavItem.querySelector('svg');
 
